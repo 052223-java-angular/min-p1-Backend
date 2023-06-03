@@ -37,7 +37,6 @@ Pokémon app is an Angular and Spring Boot fullstack application. The applicatio
 - **Node.js/NPM**:Used for managing project frontend dependencies.
 - **Maven or Gradle**: Used for managing project backend dependencies.
 - **JUnit**: A testing framework for Java applications, used to ensure our code works as expected.
-- **Log4j**: A logging utility for debugging purposes.
 - **JDBC (Java Database Connectivity)**: An API for connecting and executing queries on the database.
 - **BCrypt**: A Java library for hashing and checking passwords for security.
 - **JUnit, Mockito, and PowerMock**: Used for unit and integration testing.
