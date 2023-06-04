@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.pokemon.dtos.requests.NewUserRequest;
+import com.revature.pokemon.entities.User;
 import com.revature.pokemon.services.UserService;
+import com.revature.pokemon.utils.custom_exceptions.InvalidCredentialException;
 import com.revature.pokemon.utils.custom_exceptions.ResourceConflictException;
 
 import lombok.AllArgsConstructor;
@@ -28,20 +30,29 @@ public class UserController {
     public ResponseEntity<?> registerUser(@RequestBody NewUserRequest req){
         // check unique username
         if(!userService.isUniqueUsername(req.getUsername())){
-            throw new ResourceConflictException("Username is not unique");
+            throw new InvalidCredentialException("Username is not unique");
         }
         // check username is valid
-
+        if(!userService.isValidUserName(req.getUsername())){
+            throw new InvalidCredentialException("Username is not valid");
+        }
         // check password
+        if(!userService.isValidPassword(req.getPassword())){
+            throw new InvalidCredentialException("Password is not valid");
+        }
 
         // check confirmedPassword
+        if(!userService.isSamePassword(req.getPassword(), req.getConfirmedPassword())){
+            throw new InvalidCredentialException("Password does not match");
+        }
 
+        User newUser = userService.register(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
-    @ExceptionHandler(ResourceConflictException.class)
-    public ResponseEntity<Map<String, Object>> handleResourceConflictExcetion(ResourceConflictException e){
+    @ExceptionHandler(InvalidCredentialException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidCredentialException(InvalidCredentialException e){
         Map<String, Object> map = new HashMap<>();
         map.put("timestamp", new Date(System.currentTimeMillis()));
         map.put("message", e.getMessage());

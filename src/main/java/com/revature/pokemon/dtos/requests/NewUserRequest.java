@@ -12,5 +12,5 @@ import lombok.Setter;
 public class NewUserRequest {
     private String username;
     private String password;
-    private String connfirmedPassword;
+    private String confirmedPassword;
 }

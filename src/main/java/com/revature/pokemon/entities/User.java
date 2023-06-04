@@ -1,5 +1,7 @@
 package com.revature.pokemon.entities;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -33,4 +35,11 @@ public class User {
     @JoinColumn(name = "role_id")
     @JsonBackReference
     private Role role;
+
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.id = UUID.randomUUID().toString();
+    }
 }
