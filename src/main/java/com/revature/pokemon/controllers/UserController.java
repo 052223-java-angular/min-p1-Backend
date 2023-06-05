@@ -16,13 +16,12 @@ import com.revature.pokemon.dtos.requests.NewUserRequest;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.services.UserService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidCredentialException;
-import com.revature.pokemon.utils.custom_exceptions.ResourceConflictException;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 public class UserController {
     private final UserService userService;
 
