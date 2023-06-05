@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 public class UserService {
     private final UserRepository userRepo;
     private final RoleService roleService;
+    private final TokenService tokenService;
 
     public boolean isUniqueUsername(String username){
         Optional<User> userOpt = userRepo.findByUsername(username);
@@ -53,8 +54,9 @@ public class UserService {
         if(userOpt.isEmpty() || !BCrypt.checkpw(req.getPassword(), userOpt.get().getPassword())){
             return Optional.empty();
         }
-        
-        return Optional.of(new Principal(userOpt.get()));
+        Principal principal = new Principal(userOpt.get());
+        principal.setToken(tokenService.generateJWT(principal));
+        return Optional.of(principal);
 
     }
 }
