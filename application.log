@@ -68,3 +68,4 @@ com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException: Role not
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.8.jar:10.1.8]
 	at java.base/java.lang.Thread.run(Unknown Source) ~[na:na]
 
+2023-06-04T23:21:54.536-04:00  WARN 8176 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
