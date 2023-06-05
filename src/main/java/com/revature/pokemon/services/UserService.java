@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.dtos.requests.NewLoginRequest;
 import com.revature.pokemon.dtos.requests.NewUserRequest;
+import com.revature.pokemon.dtos.responses.Principal;
 import com.revature.pokemon.entities.Role;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.RoleRepository;
@@ -45,13 +47,14 @@ public class UserService {
         return newUser;
     }
 
-    public Optional<User> login(String username, String password){
-        Optional<User> userOpt = userRepo.findByUsername(username);
+    public Optional<Principal> login(NewLoginRequest req){
+        Optional<User> userOpt = userRepo.findByUsername(req.getUsername());
 
-        if(userOpt.isEmpty() || !BCrypt.checkpw(password, userOpt.get().getPassword())){
+        if(userOpt.isEmpty() || !BCrypt.checkpw(req.getPassword(), userOpt.get().getPassword())){
             return Optional.empty();
         }
-        return userOpt;
+        
+        return Optional.of(new Principal(userOpt.get()));
 
     }
 }
