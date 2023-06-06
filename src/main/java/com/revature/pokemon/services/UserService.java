@@ -43,7 +43,7 @@ public class UserService {
     public User register(NewUserRequest req){
         Role role = roleService.findByName("USER");
         String hashed = BCrypt.hashpw(req.getPassword(), BCrypt.gensalt());
-        User newUser = new User(req.getUsername(), hashed, role);
+        User newUser = new User(req.getUsername(), hashed, req.getEmail(), role);
         userRepo.save(newUser);
         return newUser;
     }

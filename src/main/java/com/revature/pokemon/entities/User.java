@@ -1,14 +1,17 @@
 package com.revature.pokemon.entities;
 
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,20 +28,53 @@ public class User {
     @Id
     private String id;
     
-    @Column(nullable = false)
+    @Column(unique = true, nullable =  false)
     private String username;
     
     @Column(nullable = false)
     private String password;
+
+    @Column(unique = true, nullable =  false)
+    private String email;
+
+    @Column
+    private String signature;
     
     @ManyToOne
     @JoinColumn(name = "role_id")
     @JsonBackReference
     private Role role;
 
-    public User(String username, String password, Role role) {
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<PostVote> postVotes;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<CommentVote> commentVotes;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Post> posts;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Team> teams;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Build> builds;
+
+
+    public User(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.signature = "";
         this.role = role;
         this.id = UUID.randomUUID().toString();
     }
