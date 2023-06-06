@@ -16,12 +16,12 @@ import lombok.AllArgsConstructor;
 public class MoveService {
     MoveRepository moveRepo;
     public Move findByName(String name){
-        return moveRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Move not found!"));
+        return moveRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Move (" + name +") not found!"));
     }
     public Set<Move> findByNames(String[] move_set) {
         Set<Move> moves = new HashSet<>();
         for(String move : move_set){
-            Move m = moveRepo.findByName(move).orElseThrow(() -> new ResourceNotFoundException("Moves not found!"));
+            Move m = moveRepo.findByName(move).orElseThrow(() -> new ResourceNotFoundException("Move (" + move +") not found!"));
             moves.add(m);
         }
         return moves;

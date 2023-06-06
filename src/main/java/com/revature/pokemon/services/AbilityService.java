@@ -13,6 +13,6 @@ import lombok.AllArgsConstructor;
 public class AbilityService {
     AbilityRepository abilityRepo;
     public Ability findByName(String name){
-        return abilityRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Ability not found!"));
+        return abilityRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Ability (" + name +") not found!"));
     }
 }

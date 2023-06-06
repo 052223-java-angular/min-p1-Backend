@@ -1,6 +1,5 @@
 package com.revature.pokemon.dtos.responses;
 
-import com.revature.pokemon.entities.Role;
 import com.revature.pokemon.entities.User;
 
 import lombok.AllArgsConstructor;

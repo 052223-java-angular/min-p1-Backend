@@ -14,6 +14,6 @@ public class NatureService {
     NatureRepository natureRepo;
 
     public Nature findByName(String name){
-        return natureRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Nature not found!"));
+        return natureRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Nature (" + name +") not found!"));
     }
 }
