@@ -1,5 +1,8 @@
 package com.revature.pokemon.services;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 import com.revature.pokemon.entities.Move;
@@ -14,5 +17,13 @@ public class MoveService {
     MoveRepository moveRepo;
     public Move findByName(String name){
         return moveRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Move not found!"));
+    }
+    public Set<Move> findByNames(String[] move_set) {
+        Set<Move> moves = new HashSet<>();
+        for(String move : move_set){
+            Move m = moveRepo.findByName(move).orElseThrow(() -> new ResourceNotFoundException("Moves not found!"));
+            moves.add(m);
+        }
+        return moves;
     }
 }

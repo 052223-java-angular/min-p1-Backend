@@ -51,10 +51,11 @@ public class Pokemon {
     )
     private Set<Move> moves;
 
-    public Pokemon(String name, Nature nature, Ability ability) {
+    public Pokemon(String name, Nature nature, Ability ability, Set<Move> moves) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.nature = nature;
         this.ability = ability;
+        this.moves = moves;
     }
 }

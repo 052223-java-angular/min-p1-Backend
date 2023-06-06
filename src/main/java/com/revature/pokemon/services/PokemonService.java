@@ -1,8 +1,11 @@
 package com.revature.pokemon.services;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 import com.revature.pokemon.entities.Ability;
+import com.revature.pokemon.entities.Move;
 import com.revature.pokemon.entities.Nature;
 import com.revature.pokemon.entities.Pokemon;
 import com.revature.pokemon.repositories.PokemonRepository;
@@ -14,11 +17,12 @@ public class PokemonService {
     PokemonRepository pokemonRepo;
     NatureService natureService;
     AbilityService abilityService;
-    public Pokemon create(String name, String nature_name, String ability_name){
+    MoveService moveService;
+    public Pokemon create(String name, String nature_name, String ability_name, String[] move_set){
         Nature nature = natureService.findByName(nature_name);
         Ability ability = abilityService.findByName(ability_name);
-
-        Pokemon pokemon = new Pokemon(name, nature, ability);
+        Set<Move> learned_moves = moveService.findByNames(move_set);
+        Pokemon pokemon = new Pokemon(name, nature, ability, learned_moves);
         pokemonRepo.save(pokemon);
         return pokemon;
     }

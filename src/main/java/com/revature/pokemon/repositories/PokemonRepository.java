@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import com.revature.pokemon.entities.Pokemon;
 @Repository
 public interface PokemonRepository extends JpaRepository<Pokemon, String>{
-    Optional<Pokemon> findById(String name);
+    Optional<Pokemon> findById(String id);
 }
