@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -53,7 +54,7 @@ public class Comment {
     @JsonBackReference
     private Post post;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<CommentVote> commenVotes;
 }
