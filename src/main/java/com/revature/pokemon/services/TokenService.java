@@ -29,6 +29,7 @@ public class TokenService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userPrincipal.getId());
         claims.put("role", userPrincipal.getRole());
+        claims.put("email", userPrincipal.getEmail());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -46,9 +47,13 @@ public class TokenService {
      * @param userPrincipal The user principal to compare against.
      * @return true if the token is valid for the user principal, false otherwise.
      */
-    public boolean validateToken(String token, Principal userPrincipal) {
-        String tokenUsername = extractUsername(token);
-        return tokenUsername.equals(userPrincipal.getUsername());
+    public boolean validateToken(String token, String id) {
+
+        boolean idMatch = extractUserId(token).equals(id);
+        System.out.println(idMatch + ":id");
+        boolean notExpired = new Date(System.currentTimeMillis()).before(extractClaim(token, Claims::getExpiration));
+        System.out.println(notExpired + ":date");
+        return (idMatch && notExpired);
     }
 
     /**
@@ -59,6 +64,16 @@ public class TokenService {
      */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    /**
+     * Extracts the email from the JWT token.
+     *
+     * @param token The JWT token.
+     * @return The extracted username.
+     */
+    public String extractEmail(String token) {
+        return (String) extractAllClaims(token).get("email");
     }
 
     /**

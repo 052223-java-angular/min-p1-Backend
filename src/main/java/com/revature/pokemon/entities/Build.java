@@ -1,10 +1,9 @@
 package com.revature.pokemon.entities;
 
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.Date;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +23,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "builds")
 public class Build {
+    
+
     @Id
     private String id;
 
@@ -31,10 +32,10 @@ public class Build {
     private String name;
 
     @Column(nullable = false)
-    private LocalDate create_time;
+    private Date create_time;
 
     @Column(nullable = false)
-    private LocalDate edit_time;
+    private Date edit_time;
 
     @Column
     private String description;
@@ -53,4 +54,14 @@ public class Build {
     @JoinColumn(name = "pokemon_id")
     @JsonBackReference
     private Pokemon pokemon;
+
+    public Build(String name, String description, User user, Pokemon pokemon) {
+        this.name = name;
+        this.description = description;
+        this.user = user;
+        this.pokemon = pokemon;
+        this.create_time = new Date(System.currentTimeMillis());
+        this.edit_time = new Date(System.currentTimeMillis());
+        this.id = UUID.randomUUID().toString();
+    }
 }

@@ -1,6 +1,8 @@
 package com.revature.pokemon.entities;
 
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,6 +26,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "pokemons")
 public class Pokemon {
+
     @Id
     private String id;
 
@@ -47,4 +50,11 @@ public class Pokemon {
         inverseJoinColumns = @JoinColumn(name = "move_id")
     )
     private Set<Move> moves;
+
+    public Pokemon(String name, Nature nature, Ability ability) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.nature = nature;
+        this.ability = ability;
+    }
 }

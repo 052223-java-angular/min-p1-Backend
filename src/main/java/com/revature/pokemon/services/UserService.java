@@ -10,7 +10,6 @@ import com.revature.pokemon.dtos.requests.NewUserRequest;
 import com.revature.pokemon.dtos.responses.Principal;
 import com.revature.pokemon.entities.Role;
 import com.revature.pokemon.entities.User;
-import com.revature.pokemon.repositories.RoleRepository;
 import com.revature.pokemon.repositories.UserRepository;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
@@ -58,5 +57,9 @@ public class UserService {
         principal.setToken(tokenService.generateJWT(principal));
         return Optional.of(principal);
 
+    }
+
+    public User getUserById(String id){
+        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ability not found!"));
     }
 }

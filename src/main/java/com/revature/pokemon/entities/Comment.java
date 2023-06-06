@@ -1,6 +1,6 @@
 package com.revature.pokemon.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -30,10 +30,10 @@ public class Comment {
     private String id;
     
     @Column(nullable = false)
-    private LocalDate create_time;
+    private Date create_time;
 
     @Column(nullable = false)
-    private LocalDate edit_time;
+    private Date edit_time;
 
     @Column(nullable = false)
     private String comment;
