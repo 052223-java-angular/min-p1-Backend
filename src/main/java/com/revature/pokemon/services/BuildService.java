@@ -49,8 +49,6 @@ public class BuildService {
     }
 
     public void setTeam(String team_id, String id){
-        System.out.println("id:" + id);
-        System.out.println("teamid:" + team_id);
         buildRepo.updateTeam(team_id, id);
     }
 }

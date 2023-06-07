@@ -49,7 +49,7 @@ public class Post {
     @Column(nullable = false)
     private int downvote;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
