@@ -21,7 +21,7 @@ public class MoveService {
     public Set<Move> findByNames(String[] move_set) {
         Set<Move> moves = new HashSet<>();
         for(String move : move_set){
-            Move m = moveRepo.findByName(move).orElseThrow(() -> new ResourceNotFoundException("Move (" + move +") not found!"));
+            Move m = findByName(move);
             moves.add(m);
         }
         return moves;
