@@ -9,6 +9,7 @@ import com.revature.pokemon.entities.Move;
 import com.revature.pokemon.entities.Nature;
 import com.revature.pokemon.entities.Pokemon;
 import com.revature.pokemon.repositories.PokemonRepository;
+import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
@@ -25,5 +26,9 @@ public class PokemonService {
         Pokemon pokemon = new Pokemon(name, nature, ability, learned_moves);
         pokemonRepo.save(pokemon);
         return pokemon;
+    }
+
+    public Pokemon findById(String id){
+        return pokemonRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pokemon (" + id +") not found!"));
     }
 }

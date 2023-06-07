@@ -44,11 +44,15 @@ public class BuildService {
         return builds;
     }
 
-    public List<Build> findAll(){
+    public List<Build> findAll1(){
         return buildRepo.findAll();
     }
 
     public void setTeam(String team_id, String id){
         buildRepo.updateTeam(team_id, id);
+    }
+
+    public List<Build> findAll2() {
+        return buildRepo.findAllBuildsWithPokemon();
     }
 }

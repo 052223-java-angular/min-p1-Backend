@@ -1,5 +1,6 @@
 package com.revature.pokemon.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,7 @@ public interface BuildRepository extends JpaRepository<Build, String> {
     @Query(value = "update builds set team_id = ?1 where id = ?2", nativeQuery = true)
     void updateTeam(String team_id, String id);
 
-
+    @Query("select b from Build b join fetch b.pokemon p join fetch p.ability a join fetch p.nature")
+    List<Build> findAllBuildsWithPokemon();
     
 }

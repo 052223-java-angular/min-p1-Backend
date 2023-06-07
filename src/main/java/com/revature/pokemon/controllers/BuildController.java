@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.pokemon.dtos.requests.GetBuildRequest;
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.services.BuildService;
@@ -35,9 +37,19 @@ public class BuildController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Build>> getAllBuilds(){
-        return ResponseEntity.status(HttpStatus.OK).body(buildService.findAll());
+    @GetMapping("/{id}")
+    public ResponseEntity<Build> getAllBuilds(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(buildService.findById(id));
+    }
+
+    @GetMapping("/all1")
+    public ResponseEntity<List<Build>> getAllBuilds1(){
+        return ResponseEntity.status(HttpStatus.OK).body(buildService.findAll1());
+    }
+
+    @GetMapping("/all2")
+    public ResponseEntity<List<Build>> getAllBuilds2(){
+        return ResponseEntity.status(HttpStatus.OK).body(buildService.findAll2());
     }
 
 }
