@@ -53,6 +53,8 @@ public class BuildService {
     }
 
     public List<Build> findAll2() {
-        return buildRepo.findAllBuildsWithPokemon();
+        List<Build> builds = buildRepo.findAllBuildsWithPokemon();
+        System.out.println(builds.get(0).getPokemon().getName());
+        return builds;
     }
 }
