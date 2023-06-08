@@ -2,8 +2,7 @@ package com.revature.pokemon.entities;
 
 import java.util.Date;
 import java.util.Set;
-
-
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,6 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "posts")
 public class Post {
+
     @Id
     private String id;
     
@@ -61,4 +61,15 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<PostVote> postVotes;
+
+    public Post(String postTitle, String message, User user) {
+        this.post_title = postTitle;
+        this.message = message;
+        this.user = user;
+        this.create_time = new Date(System.currentTimeMillis());
+        this.edit_time = new Date(System.currentTimeMillis());
+        this.downvote = 0;
+        this.upvote = 0;
+        this.id = UUID.randomUUID().toString();
+    }
 }
