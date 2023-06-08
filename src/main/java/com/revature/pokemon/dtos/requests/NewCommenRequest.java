@@ -9,9 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NewPostRequest {
+public class NewCommenRequest {
+    private String comment;
     private String token;
     private String userId;
-    private String postTitle;
-    private String message;
+    private String postId;
 }

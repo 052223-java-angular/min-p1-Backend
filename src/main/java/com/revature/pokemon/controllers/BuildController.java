@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.pokemon.dtos.requests.GetBuildRequest;
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.services.BuildService;

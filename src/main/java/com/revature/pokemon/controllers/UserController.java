@@ -44,7 +44,7 @@ public class UserController {
             throw new InvalidCredentialException("Password does not match");
         }
 
-        User newUser = userService.register(req);
+        userService.register(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
