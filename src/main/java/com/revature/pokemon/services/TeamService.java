@@ -1,6 +1,8 @@
 package com.revature.pokemon.services;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.revature.pokemon.dtos.requests.ModifyTeamRequest;
 import com.revature.pokemon.dtos.requests.NewTeamRequest;
 import com.revature.pokemon.dtos.requests.TeamDeleteRequest;
+import com.revature.pokemon.dtos.responses.BuildResponse;
+import com.revature.pokemon.dtos.responses.TeamResponse;
 import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.entities.Team;
 import com.revature.pokemon.entities.User;
@@ -50,5 +54,20 @@ public class TeamService {
     public void delete(TeamDeleteRequest req) {
         Team team = findById(req.getTeamId());
         teamRepo.delete(team);
+    }
+
+    public List<TeamResponse> findByUserId(String user_id) {
+        List<Team> teams = teamRepo.findAllTeamsWithBuildsByUserId(user_id);
+        List<TeamResponse> responseList = new ArrayList<>();
+        
+        for(Team team : teams){
+            responseList.add(new TeamResponse(team));
+        }
+        return responseList;
+    }
+
+    public TeamResponse findTeamWithBuildsById(String id) {
+        Team team = teamRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team (" + id +") not found!"));
+        return new TeamResponse(team);
     }
 }
