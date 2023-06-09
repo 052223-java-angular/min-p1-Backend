@@ -1,8 +1,12 @@
 package com.revature.pokemon.services;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.dtos.requests.ModifyPostRequest;
 import com.revature.pokemon.dtos.requests.NewPostRequest;
+import com.revature.pokemon.dtos.requests.PostDeleteRequest;
 import com.revature.pokemon.dtos.requests.PostVoteRequest;
 import com.revature.pokemon.entities.Post;
 import com.revature.pokemon.entities.PostVote;
@@ -43,6 +47,20 @@ public class PostService {
             }
         }
         postVoteService.vote(vote);
+    }
+
+    public void modify(ModifyPostRequest req) {
+        Post post = findById(req.getPostId());  
+        post.setMessage(req.getMessage());
+        post.setPost_title(req.getPostTitle());
+        post.setEdit_time(new Date(System.currentTimeMillis()));
+
+        postRepo.save(post);
+    }
+
+    public void delete(PostDeleteRequest req) {
+        Post post = findById(req.getPostId());
+        postRepo.delete(post);
     }
     
 }
