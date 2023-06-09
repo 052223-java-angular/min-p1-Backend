@@ -1,8 +1,12 @@
 package com.revature.pokemon.services;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.dtos.requests.CommentDeleteRequest;
 import com.revature.pokemon.dtos.requests.CommentVoteRequest;
+import com.revature.pokemon.dtos.requests.ModifyCommentRequest;
 import com.revature.pokemon.dtos.requests.NewCommenRequest;
 import com.revature.pokemon.entities.Comment;
 import com.revature.pokemon.entities.CommentVote;
@@ -19,7 +23,7 @@ public class CommentService {
     CommentRepository commentRepo;
     UserService userService;
     PostService postService;
-    CommentVoteService commenVoteService;
+    CommentVoteService commentVoteService;
 
     public void create(NewCommenRequest req) {
         User user = userService.findById(req.getUserId());
@@ -35,18 +39,33 @@ public class CommentService {
     public void vote(CommentVoteRequest req) {
         User user = userService.findById(req.getUserId());
         Comment comment = findById(req.getCommentId());
-        CommentVote vote = commenVoteService.findByUserAndComment(user, comment);
+        CommentVote vote = commentVoteService.findByUserAndComment(user, comment);
         if(vote == null){
             vote = new CommentVote(user, comment ,req.isVote());
         }else{
             if(vote.isVote() == req.isVote()){
-                commenVoteService.delete(vote);
+                commentVoteService.delete(vote);
                 return;
             }else{
                 vote.setVote(req.isVote());
             }
         }
-        commenVoteService.vote(vote);
+        commentVoteService.vote(vote);
+    }
+
+    public void modify(ModifyCommentRequest req) {
+        Comment comment = findById(req.getCommentId());
+        comment.setComment(req.getComment());
+        comment.setEdit_time(new Date(System.currentTimeMillis()));
+        
+        commentRepo.save(comment);
+    }
+
+    public void delete(CommentDeleteRequest req) {
+        Comment comment = findById(req.getCommentId());
+
+        commentRepo.delete(comment);
+
     }
     
 }

@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -50,9 +51,9 @@ public class Comment {
     @JsonBackReference
     private Post post;
 
-    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<CommentVote> commenVotes;
+    private Set<CommentVote> commentVotes;
 
     public Comment(String comment, Post post, User user) {
         this.comment = comment;

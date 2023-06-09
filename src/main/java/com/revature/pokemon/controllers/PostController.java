@@ -46,7 +46,7 @@ public class PostController {
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<?> modifyBuild(@RequestBody ModifyPostRequest req){
+    public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req){
         if(!tokenService.validateToken(req.getToken(), req.getUserId())){
             throw new InvalidTokenException("Token is invalid or expired");
         }
@@ -55,7 +55,7 @@ public class PostController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> deleteBuild(@RequestBody PostDeleteRequest req){
+    public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req){
         if(!tokenService.validateToken(req.getToken(), req.getUserId())){
             throw new InvalidTokenException("Token is invalid or expired");
         }
