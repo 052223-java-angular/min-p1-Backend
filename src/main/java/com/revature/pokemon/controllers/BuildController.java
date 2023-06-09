@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.dtos.responses.BuildResponse;
-import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.services.BuildService;
 import com.revature.pokemon.services.TokenService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;

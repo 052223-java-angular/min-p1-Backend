@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.pokemon.dtos.requests.CommentVoteRequest;
 import com.revature.pokemon.dtos.requests.NewCommenRequest;
-import com.revature.pokemon.dtos.requests.PostVoteRequest;
 import com.revature.pokemon.services.CommentService;
 import com.revature.pokemon.services.TokenService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;

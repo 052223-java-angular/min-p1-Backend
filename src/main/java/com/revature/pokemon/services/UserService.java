@@ -60,6 +60,6 @@ public class UserService {
     }
 
     public User findById(String id){
-        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ability not found!"));
+        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
     }
 }

@@ -22,8 +22,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "abilities")
 public class Ability {
+
     @Id
     private String id;
+    
     @Column(unique = true, nullable =  false)
     private String name;
 

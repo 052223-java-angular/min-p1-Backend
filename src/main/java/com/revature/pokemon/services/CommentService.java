@@ -29,7 +29,7 @@ public class CommentService {
     }
 
     public Comment findById(String commentId) {
-        return commentRepo.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Post (" + commentId +") not found!"));
+        return commentRepo.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment (" + commentId +") not found!"));
     }
 
     public void vote(CommentVoteRequest req) {
