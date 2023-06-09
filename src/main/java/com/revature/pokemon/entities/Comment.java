@@ -40,12 +40,6 @@ public class Comment {
     @Column(nullable = false)
     private String comment;
 
-    @Column(nullable = false)
-    private int upvote;
-
-    @Column(nullable = false)
-    private int downvote;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference

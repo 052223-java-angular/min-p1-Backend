@@ -1,5 +1,6 @@
 package com.revature.pokemon.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
+import com.revature.pokemon.dtos.responses.BuildResponse;
 import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.entities.Pokemon;
 import com.revature.pokemon.entities.User;
@@ -52,9 +54,12 @@ public class BuildService {
         buildRepo.updateTeam(team_id, id);
     }
 
-    public List<Build> findAll2() {
+    public List<BuildResponse> findAll2() {
         List<Build> builds = buildRepo.findAllBuildsWithPokemon();
-        System.out.println(builds.get(0).getPokemon().getName());
-        return builds;
+        List<BuildResponse> responseList = new ArrayList<>();
+        for(Build build : builds){
+            responseList.add(new BuildResponse(build));
+        }
+        return responseList;
     }
 }

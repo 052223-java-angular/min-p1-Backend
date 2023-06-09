@@ -43,12 +43,6 @@ public class Post {
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
-    private int upvote;
-    
-    @Column(nullable = false)
-    private int downvote;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
@@ -68,8 +62,6 @@ public class Post {
         this.user = user;
         this.create_time = new Date(System.currentTimeMillis());
         this.edit_time = new Date(System.currentTimeMillis());
-        this.downvote = 0;
-        this.upvote = 0;
         this.id = UUID.randomUUID().toString();
     }
 }
