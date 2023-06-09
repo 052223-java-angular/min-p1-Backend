@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.pokemon.dtos.requests.ModifyUserSignatureRequest;
 import com.revature.pokemon.dtos.requests.NewLoginRequest;
 import com.revature.pokemon.dtos.requests.NewUserRequest;
 import com.revature.pokemon.dtos.responses.Principal;
+import com.revature.pokemon.services.TokenService;
 import com.revature.pokemon.services.UserService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidCredentialException;
+import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import lombok.AllArgsConstructor;
 
@@ -22,6 +25,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/auth")
 public class UserController {
     private final UserService userService;
+    private final TokenService tokenService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody NewUserRequest req){
@@ -57,6 +61,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(principalOpt.get());
     }
 
-    
+    @PostMapping("/ModifySignature")
+    public ResponseEntity<Principal> modifySignature(@RequestBody ModifyUserSignatureRequest req){
+        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
+            throw new InvalidTokenException("Token is invalid or expired");
+        }
+        userService.modifySignature(req);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
 }

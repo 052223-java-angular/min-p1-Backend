@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.dtos.requests.ModifyUserSignatureRequest;
 import com.revature.pokemon.dtos.requests.NewLoginRequest;
 import com.revature.pokemon.dtos.requests.NewUserRequest;
 import com.revature.pokemon.dtos.responses.Principal;
@@ -61,5 +62,11 @@ public class UserService {
 
     public User findById(String id){
         return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+    }
+
+    public void modifySignature(ModifyUserSignatureRequest req) {
+        User user = findById(req.getUserId());
+        user.setSignature(req.getSignature());
+        userRepo.save(user);
     }
 }
