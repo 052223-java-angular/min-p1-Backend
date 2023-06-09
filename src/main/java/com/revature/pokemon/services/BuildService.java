@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.dtos.requests.BuildDeleteRequest;
 import com.revature.pokemon.dtos.requests.ModifyBuildRequest;
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.dtos.responses.BuildResponse;
@@ -97,5 +98,10 @@ public class BuildService {
         build.setEdit_time(new Date(System.currentTimeMillis()));
 
         buildRepo.save(build);
+    }
+
+    public void delete(BuildDeleteRequest req) {
+        Build build = findById(req.getBuildId());
+        buildRepo.delete(build);
     }
 }

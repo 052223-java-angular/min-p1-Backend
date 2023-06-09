@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.pokemon.dtos.requests.BuildDeleteRequest;
 import com.revature.pokemon.dtos.requests.ModifyBuildRequest;
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.dtos.responses.BuildResponse;
@@ -43,6 +44,15 @@ public class BuildController {
             throw new InvalidTokenException("Token is invalid or expired");
         }
         buildService.modify(req);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteBuild(@RequestBody BuildDeleteRequest req){
+        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
+            throw new InvalidTokenException("Token is invalid or expired");
+        }
+        buildService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
