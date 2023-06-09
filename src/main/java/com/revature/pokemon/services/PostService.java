@@ -3,7 +3,9 @@ package com.revature.pokemon.services;
 import org.springframework.stereotype.Service;
 
 import com.revature.pokemon.dtos.requests.NewPostRequest;
+import com.revature.pokemon.dtos.requests.PostVoteRequest;
 import com.revature.pokemon.entities.Post;
+import com.revature.pokemon.entities.PostVote;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.PostRepository;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
@@ -14,6 +16,7 @@ import lombok.AllArgsConstructor;
 public class PostService {
     PostRepository postRepo;
     UserService userService;
+    PostVoteService postVoteService;
 
     public void create(NewPostRequest req) {
         User user = userService.findById(req.getUserId());
@@ -23,6 +26,23 @@ public class PostService {
 
     public Post findById(String postId) {
         return postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post (" + postId +") not found!"));
+    }
+
+    public void vote(PostVoteRequest req) {
+        User user = userService.findById(req.getUserId());
+        Post post = findById(req.getPostId());
+        PostVote vote = postVoteService.findByUserAndPost(user, post);
+        if(vote == null){
+            vote = new PostVote(user, post, req.isVote());
+        }else{
+            if(vote.isVote() == req.isVote()){
+                postVoteService.delete(vote);
+                return;
+            }else{
+                vote.setVote(req.isVote());
+            }
+        }
+        postVoteService.vote(vote);
     }
     
 }

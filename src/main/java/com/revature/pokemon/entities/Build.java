@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -49,6 +50,7 @@ public class Build {
     private String description;
 
     @ManyToMany(mappedBy = "builds",fetch = FetchType.LAZY) 
+    @JsonBackReference
     private Set<Team> teams;
 
     @ManyToOne(fetch = FetchType.LAZY)

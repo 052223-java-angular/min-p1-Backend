@@ -39,7 +39,6 @@ public class BuildResponse {
         this.moves = build.getMoves();
         this.ability = build.getAbility().getName();
         this.nature = build.getNature().getName();
-        this.teams = build.getTeams();
         this.pokemonName = build.getPokemonName();
     }
 }

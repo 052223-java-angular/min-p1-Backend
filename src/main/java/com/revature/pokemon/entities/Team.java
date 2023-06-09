@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +49,7 @@ public class Team {
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
     @JoinTable(
         name = "build_list",
         joinColumns = @JoinColumn(name = "team_id"),

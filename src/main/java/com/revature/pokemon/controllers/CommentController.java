@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.pokemon.dtos.requests.CommentVoteRequest;
 import com.revature.pokemon.dtos.requests.NewCommenRequest;
+import com.revature.pokemon.dtos.requests.PostVoteRequest;
 import com.revature.pokemon.services.CommentService;
 import com.revature.pokemon.services.TokenService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
@@ -27,6 +29,15 @@ public class CommentController {
             throw new InvalidTokenException("Token is invalid or expired");
         }
         commentService.create(req);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/vote")
+    public ResponseEntity<?> votePost(@RequestBody CommentVoteRequest req){
+        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
+            throw new InvalidTokenException("Token is invalid or expired");
+        }
+        commentService.vote(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

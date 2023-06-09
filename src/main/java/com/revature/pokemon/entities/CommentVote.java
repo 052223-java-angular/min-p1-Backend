@@ -1,5 +1,7 @@
 package com.revature.pokemon.entities;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -20,6 +22,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "comment_votes")
 public class CommentVote {
+
     @Id
     private String id;
 
@@ -34,4 +37,11 @@ public class CommentVote {
     @JoinColumn(name = "comment_id")
     @JsonBackReference
     private Comment comment;
+
+    public CommentVote(User user, Comment comment, boolean vote) {
+        this.id = UUID.randomUUID().toString();
+        this.user = user;
+        this.comment = comment;
+        this.vote = vote;
+    }
 }
