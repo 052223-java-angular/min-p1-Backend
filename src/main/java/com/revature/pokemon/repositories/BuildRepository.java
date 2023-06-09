@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.revature.pokemon.entities.Build;
@@ -23,5 +24,8 @@ public interface BuildRepository extends JpaRepository<Build, String> {
 
     @Query("select b from Build b join fetch b.ability a join fetch b.nature")
     List<Build> findAllBuildsWithPokemon();
+
+    @Query("select b from Build b join fetch b.ability a join fetch b.nature where b.user.id = :user_id")
+    List<Build> findAllBuildsWithPokemonByUserId(@Param("user_id") String user_id);
     
 }

@@ -48,12 +48,7 @@ public class Build {
     @Column
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "build_list",
-        joinColumns = @JoinColumn(name = "build_id"),
-        inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
+    @ManyToMany(mappedBy = "builds",fetch = FetchType.LAZY) 
     private Set<Team> teams;
 
     @ManyToOne(fetch = FetchType.LAZY)

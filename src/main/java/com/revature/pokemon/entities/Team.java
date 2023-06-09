@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -46,13 +47,19 @@ public class Team {
     @JsonBackReference
     private User user;
 
-    @ManyToMany(mappedBy = "teams",fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "build_list",
+        joinColumns = @JoinColumn(name = "team_id"),
+        inverseJoinColumns = @JoinColumn(name = "build_id")
+    )
     private Set<Build> builds;
 
-    public Team(String name, String description,User user) {
+    public Team(String name, String description,User user, Set<Build> builds) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.user = user;
+        this.builds = builds;
         this.create_time = new Date(System.currentTimeMillis());
         this.edit_time = new Date(System.currentTimeMillis());
         this.description = description;

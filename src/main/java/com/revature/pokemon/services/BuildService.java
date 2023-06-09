@@ -66,4 +66,18 @@ public class BuildService {
         }
         return responseList;
     }
+
+    public List<BuildResponse> findByUserId(String user_id) {
+        List<Build> builds = buildRepo.findAllBuildsWithPokemonByUserId(user_id);
+        List<BuildResponse> responseList = new ArrayList<>();
+        for(Build build : builds){
+            responseList.add(new BuildResponse(build));
+        }
+        return responseList;
+    }
+
+    public BuildResponse findBuildsWithPokemonById(String id) {
+        Build build = buildRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Build (" + id +") not found!"));
+        return new BuildResponse(build);
+    }
 }

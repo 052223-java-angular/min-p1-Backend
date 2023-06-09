@@ -22,13 +22,10 @@ public class TeamService {
 
     public Team create(NewTeamRequest req){
         User user = userService.findById(req.getUserId());
-        Team team = new Team(req.getName(), req.getDescription(),user);
-        teamRepo.save(team);
-        for(String build_id : req.getBuilds()){
-            buildService.setTeam(team.getId(), build_id);
-        }
         Set<Build> builds = buildService.findByIds(req.getBuilds());
-        team.setBuilds(builds);
+        System.out.println(builds.size());
+        Team team = new Team(req.getName(), req.getDescription(), user, builds);
+        teamRepo.save(team);
         
         return team;
     }
