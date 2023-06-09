@@ -1,5 +1,6 @@
 package com.revature.pokemon.services;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.dtos.requests.ModifyBuildRequest;
 import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.dtos.responses.BuildResponse;
 import com.revature.pokemon.entities.Ability;
@@ -79,5 +81,21 @@ public class BuildService {
     public BuildResponse findBuildsWithPokemonById(String id) {
         Build build = buildRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Build (" + id +") not found!"));
         return new BuildResponse(build);
+    }
+
+    public void modify(ModifyBuildRequest req) {
+        Nature nature = natureService.findByName(req.getNatureName());
+        Ability ability = abilityService.findByName(req.getAbilityName());
+        Set<Move> moves = moveService.findByNames(req.getLearnedMoves());
+        Build build = findById(req.getBuildId());
+        build.setName(req.getName());
+        build.setDescription(req.getDescription());
+        build.setAbility(ability);
+        build.setNature(nature);
+        build.setPokemonName(req.getPokemonName());
+        build.setMoves(moves);
+        build.setEdit_time(new Date(System.currentTimeMillis()));
+
+        buildRepo.save(build);
     }
 }
