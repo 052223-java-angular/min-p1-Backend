@@ -31,5 +31,5 @@ public class Nature {
 
     @OneToMany(mappedBy = "nature", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<Pokemon> pokemons;
+    private Set<Build> Builds;
 }

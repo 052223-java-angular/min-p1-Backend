@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.pokemon.dtos.requests.NewLoginRequest;
 import com.revature.pokemon.dtos.requests.NewUserRequest;
 import com.revature.pokemon.dtos.responses.Principal;
-import com.revature.pokemon.entities.User;
 import com.revature.pokemon.services.UserService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidCredentialException;
 

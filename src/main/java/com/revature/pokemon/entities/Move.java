@@ -31,8 +31,8 @@ public class Move {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "learned_moves",
-        joinColumns = @JoinColumn(name = "pokemon_id"),
+        joinColumns = @JoinColumn(name = "build_id"),
         inverseJoinColumns = @JoinColumn(name = "move_id")
     )
-    private Set<Pokemon> pokemons;
+    private Set<Build> builds;
 }

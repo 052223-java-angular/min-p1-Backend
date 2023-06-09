@@ -50,9 +50,7 @@ public class TokenService {
     public boolean validateToken(String token, String id) {
 
         boolean idMatch = extractUserId(token).equals(id);
-        System.out.println(idMatch + ":id");
         boolean notExpired = new Date(System.currentTimeMillis()).before(extractClaim(token, Claims::getExpiration));
-        System.out.println(notExpired + ":date");
         return (idMatch && notExpired);
     }
 

@@ -29,5 +29,5 @@ public class Ability {
 
     @OneToMany(mappedBy = "ability", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<Pokemon> pokemons;
+    private Set<Build> pokemons;
 }
