@@ -42,9 +42,6 @@ public class Build {
     @Column(nullable = false)
     private Date edit_time;
 
-    @Column(nullable = false)
-    private String pokemonName;
-
     @Column
     private String description;
 
@@ -67,6 +64,11 @@ public class Build {
     @JsonBackReference
     private Nature nature;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pokemon_Id")
+    @JsonBackReference
+    private Pokemon pokemon;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinTable(
@@ -76,14 +78,14 @@ public class Build {
     )
     private Set<Move> moves;
 
-    public Build(String name, String description, User user, Nature nature, Ability ability, Set<Move> moves, String pokemonName) {
+    public Build(String name, String description, User user, Nature nature, Ability ability, Set<Move> moves, Pokemon pokemon) {
         this.name = name;
         this.description = description;
         this.user = user;
         this.nature = nature;
         this.ability = ability;
         this.moves = moves;
-        this.pokemonName = pokemonName;
+        this.pokemon = pokemon;
         this.create_time = new Date(System.currentTimeMillis());
         this.edit_time = new Date(System.currentTimeMillis());
         this.id = UUID.randomUUID().toString();

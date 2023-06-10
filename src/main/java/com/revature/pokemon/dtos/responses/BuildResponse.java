@@ -26,7 +26,7 @@ public class BuildResponse {
     private String description;
     private Set<Move> moves;
     private Set<Team> teams;
-    private String pokemonName;
+    private String pokemon;
     private String nature;
     private String ability;
 
@@ -39,6 +39,6 @@ public class BuildResponse {
         this.moves = build.getMoves();
         this.ability = build.getAbility().getName();
         this.nature = build.getNature().getName();
-        this.pokemonName = build.getPokemonName();
+        this.pokemon = build.getPokemon().getName();
     }
 }

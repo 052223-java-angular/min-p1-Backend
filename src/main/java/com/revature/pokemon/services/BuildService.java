@@ -16,6 +16,7 @@ import com.revature.pokemon.entities.Ability;
 import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.entities.Move;
 import com.revature.pokemon.entities.Nature;
+import com.revature.pokemon.entities.Pokemon;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.BuildRepository;
 import com.revature.pokemon.utils.custom_exceptions.PermissionException;
@@ -29,14 +30,16 @@ public class BuildService {
     BuildRepository buildRepo;
     AbilityService abilityService;
     NatureService natureService;
+    PokemonService pokemonService;
     MoveService moveService;
     UserService userService;
     public Build create(NewBuildRequest req){ 
         Nature nature = natureService.findByName(req.getNatureName());
         Ability ability = abilityService.findByName(req.getAbilityName());
+        Pokemon pokemon = pokemonService.findByName(req.getPokemonName());
         Set<Move> moves = moveService.findByNames(req.getLearnedMoves());
         User user = userService.findById(req.getUserId());
-        Build build = new Build(req.getName(), req.getDescription(), user, nature, ability, moves, req.getPokemonName());
+        Build build = new Build(req.getName(), req.getDescription(), user, nature, ability, moves, pokemon);
         buildRepo.save(build);
         return build;
     }
@@ -88,6 +91,7 @@ public class BuildService {
     public void modify(ModifyBuildRequest req) {
         Nature nature = natureService.findByName(req.getNatureName());
         Ability ability = abilityService.findByName(req.getAbilityName());
+        Pokemon pokemon = pokemonService.findByName(req.getPokemonName());
         Set<Move> moves = moveService.findByNames(req.getLearnedMoves());
         Build build = findById(req.getBuildId());
 
@@ -99,7 +103,7 @@ public class BuildService {
         build.setDescription(req.getDescription());
         build.setAbility(ability);
         build.setNature(nature);
-        build.setPokemonName(req.getPokemonName());
+        build.setPokemon(pokemon);
         build.setMoves(moves);
         build.setEdit_time(new Date(System.currentTimeMillis()));
 
