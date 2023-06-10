@@ -31,27 +31,24 @@ public class BuildController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createBuild(@RequestBody NewBuildRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         buildService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
     public ResponseEntity<?> modifyBuild(@RequestBody ModifyBuildRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+
         buildService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
     public ResponseEntity<?> deleteBuild(@RequestBody BuildDeleteRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+
         buildService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

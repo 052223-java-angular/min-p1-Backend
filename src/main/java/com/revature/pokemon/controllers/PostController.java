@@ -33,36 +33,32 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody NewPostRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         postService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/vote")
     public ResponseEntity<?> votePost(@RequestBody PostVoteRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         postService.vote(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
     public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         postService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
     public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         postService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

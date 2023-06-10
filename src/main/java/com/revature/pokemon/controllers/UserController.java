@@ -63,9 +63,8 @@ public class UserController {
 
     @PostMapping("/ModifySignature")
     public ResponseEntity<Principal> modifySignature(@RequestBody ModifyUserSignatureRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         userService.modifySignature(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

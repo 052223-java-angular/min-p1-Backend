@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.revature.pokemon.dtos.responses.Principal;
+import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -47,31 +48,14 @@ public class TokenService {
      * @param userPrincipal The user principal to compare against.
      * @return true if the token is valid for the user principal, false otherwise.
      */
-    public boolean validateToken(String token, String id) {
+    public void validateToken(String token, String id) {
+        extractClaim(token, Claims::getExpiration);
 
         boolean idMatch = extractUserId(token).equals(id);
-        boolean notExpired = new Date(System.currentTimeMillis()).before(extractClaim(token, Claims::getExpiration));
-        return (idMatch && notExpired);
-    }
-
-    /**
-     * Extracts the username from the JWT token.
-     *
-     * @param token The JWT token.
-     * @return The extracted username.
-     */
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    /**
-     * Extracts the email from the JWT token.
-     *
-     * @param token The JWT token.
-     * @return The extracted username.
-     */
-    public String extractEmail(String token) {
-        return (String) extractAllClaims(token).get("email");
+        
+        if(!idMatch){
+            throw new InvalidTokenException("Token is invalid or expired");
+        }
     }
 
     /**
@@ -107,15 +91,4 @@ public class TokenService {
     public String extractUserId(String token) {
         return (String) extractAllClaims(token).get("id");
     }
-
-    /**
-     * Extracts the user role from the JWT token.
-     *
-     * @param token The JWT token.
-     * @return The extracted user role.
-     */
-    public String extractUserRole(String token) {
-        return (String) extractAllClaims(token).get("role");
-    }
-
 }

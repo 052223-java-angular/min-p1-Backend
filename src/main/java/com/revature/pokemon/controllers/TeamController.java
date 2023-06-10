@@ -32,27 +32,24 @@ public class TeamController {
     
     @PostMapping("/create")
     public ResponseEntity<?> createTeam(@RequestBody NewTeamRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         teamService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
     public ResponseEntity<?> modifyTeam(@RequestBody ModifyTeamRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         teamService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
     public ResponseEntity<?> deleteTeam(@RequestBody TeamDeleteRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         teamService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

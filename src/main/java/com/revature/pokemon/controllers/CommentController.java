@@ -26,36 +26,32 @@ public class CommentController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createBuild(@RequestBody NewCommenRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+
         commentService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/vote")
     public ResponseEntity<?> votePost(@RequestBody CommentVoteRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         commentService.vote(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
     public ResponseEntity<?> modifyComment(@RequestBody ModifyCommentRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         commentService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
     public ResponseEntity<?> deleteComment(@RequestBody CommentDeleteRequest req){
-        if(!tokenService.validateToken(req.getToken(), req.getUserId())){
-            throw new InvalidTokenException("Token is invalid or expired");
-        }
+        tokenService.validateToken(req.getToken(), req.getUserId());
+        
         commentService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
