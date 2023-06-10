@@ -16,6 +16,7 @@ import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.entities.Team;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.TeamRepository;
+import com.revature.pokemon.utils.custom_exceptions.PermissionException;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -42,6 +43,11 @@ public class TeamService {
 
     public void modify(ModifyTeamRequest req) {
         Team team = findById(req.getTeamId());
+
+        if(!req.getUserId().equals(team.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         Set<Build> builds = buildService.findByIds(req.getBuilds());
         team.setBuilds(builds);
         team.setEdit_time(new Date(System.currentTimeMillis()));
@@ -53,6 +59,11 @@ public class TeamService {
 
     public void delete(TeamDeleteRequest req) {
         Team team = findById(req.getTeamId());
+
+        if(!req.getUserId().equals(team.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         teamRepo.delete(team);
     }
 

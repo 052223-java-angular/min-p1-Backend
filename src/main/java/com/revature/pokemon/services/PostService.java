@@ -15,6 +15,7 @@ import com.revature.pokemon.entities.Post;
 import com.revature.pokemon.entities.PostVote;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.PostRepository;
+import com.revature.pokemon.utils.custom_exceptions.PermissionException;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -54,6 +55,11 @@ public class PostService {
 
     public void modify(ModifyPostRequest req) {
         Post post = findById(req.getPostId());  
+
+        if(!req.getUserId().equals(post.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         post.setMessage(req.getMessage());
         post.setPost_title(req.getPostTitle());
         post.setEdit_time(new Date(System.currentTimeMillis()));
@@ -63,6 +69,11 @@ public class PostService {
 
     public void delete(PostDeleteRequest req) {
         Post post = findById(req.getPostId());
+
+        if(!req.getUserId().equals(post.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         postRepo.delete(post);
     }
 

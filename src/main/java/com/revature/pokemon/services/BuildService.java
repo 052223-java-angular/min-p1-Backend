@@ -18,6 +18,7 @@ import com.revature.pokemon.entities.Move;
 import com.revature.pokemon.entities.Nature;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.BuildRepository;
+import com.revature.pokemon.utils.custom_exceptions.PermissionException;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -89,6 +90,11 @@ public class BuildService {
         Ability ability = abilityService.findByName(req.getAbilityName());
         Set<Move> moves = moveService.findByNames(req.getLearnedMoves());
         Build build = findById(req.getBuildId());
+
+        if(!req.getUserId().equals(build.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         build.setName(req.getName());
         build.setDescription(req.getDescription());
         build.setAbility(ability);
@@ -102,6 +108,11 @@ public class BuildService {
 
     public void delete(BuildDeleteRequest req) {
         Build build = findById(req.getBuildId());
+
+        if(!req.getUserId().equals(build.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         buildRepo.delete(build);
     }
 }

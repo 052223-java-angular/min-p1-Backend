@@ -13,6 +13,7 @@ import com.revature.pokemon.entities.CommentVote;
 import com.revature.pokemon.entities.Post;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.CommentRepository;
+import com.revature.pokemon.utils.custom_exceptions.PermissionException;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -55,6 +56,11 @@ public class CommentService {
 
     public void modify(ModifyCommentRequest req) {
         Comment comment = findById(req.getCommentId());
+
+        if(!req.getUserId().equals(comment.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
+
         comment.setComment(req.getComment());
         comment.setEdit_time(new Date(System.currentTimeMillis()));
         
@@ -63,6 +69,10 @@ public class CommentService {
 
     public void delete(CommentDeleteRequest req) {
         Comment comment = findById(req.getCommentId());
+
+        if(!req.getUserId().equals(comment.getUser().getId())){
+            throw new PermissionException("You do not have permission to make this change!");
+        }
 
         commentRepo.delete(comment);
 
