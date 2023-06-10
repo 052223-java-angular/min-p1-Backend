@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.dtos.requests.ModifyPostRequest;
 import com.revature.pokemon.dtos.requests.NewPostRequest;
 import com.revature.pokemon.dtos.requests.PostDeleteRequest;

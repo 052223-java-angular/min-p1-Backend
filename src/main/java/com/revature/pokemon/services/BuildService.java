@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.dtos.requests.BuildDeleteRequest;
 import com.revature.pokemon.dtos.requests.ModifyBuildRequest;
 import com.revature.pokemon.dtos.requests.NewBuildRequest;

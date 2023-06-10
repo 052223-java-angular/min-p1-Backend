@@ -18,11 +18,9 @@ import com.revature.pokemon.dtos.requests.ModifyPostRequest;
 import com.revature.pokemon.dtos.requests.NewPostRequest;
 import com.revature.pokemon.dtos.requests.PostDeleteRequest;
 import com.revature.pokemon.dtos.requests.PostVoteRequest;
-import com.revature.pokemon.dtos.responses.BuildResponse;
 import com.revature.pokemon.dtos.responses.PostResponse;
 import com.revature.pokemon.services.PostService;
 import com.revature.pokemon.services.TokenService;
-import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import lombok.AllArgsConstructor;
 

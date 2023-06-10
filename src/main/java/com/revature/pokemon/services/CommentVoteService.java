@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.entities.Comment;
 import com.revature.pokemon.entities.CommentVote;
 import com.revature.pokemon.entities.User;

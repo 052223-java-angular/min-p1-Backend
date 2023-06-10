@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.dtos.requests.ModifyUserSignatureRequest;
 import com.revature.pokemon.dtos.requests.NewLoginRequest;
 import com.revature.pokemon.dtos.requests.NewUserRequest;

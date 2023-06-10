@@ -18,7 +18,6 @@ import com.revature.pokemon.dtos.responses.Principal;
 import com.revature.pokemon.services.TokenService;
 import com.revature.pokemon.services.UserService;
 import com.revature.pokemon.utils.custom_exceptions.InvalidCredentialException;
-import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import lombok.AllArgsConstructor;
 

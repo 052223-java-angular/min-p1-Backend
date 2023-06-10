@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.pokemon.dtos.requests.ModifyTeamRequest;
 import com.revature.pokemon.dtos.requests.NewTeamRequest;
 import com.revature.pokemon.dtos.requests.TeamDeleteRequest;
-import com.revature.pokemon.dtos.responses.BuildResponse;
 import com.revature.pokemon.dtos.responses.TeamResponse;
 import com.revature.pokemon.services.TeamService;
 import com.revature.pokemon.services.TokenService;
-import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import lombok.AllArgsConstructor;
 

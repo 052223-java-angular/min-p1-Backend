@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.dtos.responses.Principal;
 import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 

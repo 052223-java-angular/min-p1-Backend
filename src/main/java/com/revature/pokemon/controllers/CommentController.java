@@ -15,7 +15,6 @@ import com.revature.pokemon.dtos.requests.ModifyCommentRequest;
 import com.revature.pokemon.dtos.requests.NewCommenRequest;
 import com.revature.pokemon.services.CommentService;
 import com.revature.pokemon.services.TokenService;
-import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import lombok.AllArgsConstructor;
 

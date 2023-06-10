@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.entities.Move;
 import com.revature.pokemon.repositories.MoveRepository;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
