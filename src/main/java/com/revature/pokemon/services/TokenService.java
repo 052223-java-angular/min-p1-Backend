@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.revature.pokemon.controllers.BuildController;
 import com.revature.pokemon.dtos.responses.Principal;
 import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
@@ -17,6 +20,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TokenService.class);
+
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
@@ -27,6 +33,8 @@ public class TokenService {
      * @return The generated JWT token.
      */
     public String generateJWT(Principal userPrincipal) {
+        logger.info("Generating new JWT token");
+
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userPrincipal.getId());
         claims.put("role", userPrincipal.getRole());
@@ -42,20 +50,21 @@ public class TokenService {
     }
 
         /**
-     * Validates the provided JWT token against the user principal.
+     * Validates the provided JWT token against the user id.
      *
      * @param token         The JWT token to validate.
-     * @param userPrincipal The user principal to compare against.
-     * @return true if the token is valid for the user principal, false otherwise.
+     * @param id The user id to compare against.
      */
     public void validateToken(String token, String id) {
+        logger.info("Validating token");
         extractClaim(token, Claims::getExpiration);
 
         boolean idMatch = extractUserId(token).equals(id);
-        
+
         if(!idMatch){
-            throw new InvalidTokenException("Token is invalid or expired");
+            throw new InvalidTokenException("Invalid Token");
         }
+        logger.info("Validation sucess");
     }
 
     /**
@@ -68,6 +77,8 @@ public class TokenService {
      * @return The extracted claim.
      */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        logger.info("Extracting claim");
+
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
@@ -79,6 +90,8 @@ public class TokenService {
      * @return The extracted claims.
      */
     private Claims extractAllClaims(String token) {
+        logger.info("Extracting all claim");
+
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
@@ -89,6 +102,8 @@ public class TokenService {
      * @return The extracted user ID.
      */
     public String extractUserId(String token) {
+        logger.info("Extracting user id");
+
         return (String) extractAllClaims(token).get("id");
     }
 }

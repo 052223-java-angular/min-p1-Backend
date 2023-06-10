@@ -2,6 +2,8 @@ package com.revature.pokemon.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +33,15 @@ public class PostController {
     private final TokenService tokenService;
     private final PostService postService;
 
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+    static{
+        logger.info("POST path");
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody NewPostRequest req){
+        logger.info("Processing create request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
         
         postService.create(req);
@@ -41,6 +50,8 @@ public class PostController {
 
     @PostMapping("/vote")
     public ResponseEntity<?> votePost(@RequestBody PostVoteRequest req){
+        logger.info("Processing vote request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
         
         postService.vote(req);
@@ -49,6 +60,8 @@ public class PostController {
 
     @PostMapping("/modify")
     public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req){
+        logger.info("Processing modify request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
         
         postService.modify(req);
@@ -57,6 +70,8 @@ public class PostController {
 
     @PostMapping("/delete")
     public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req){
+        logger.info("Processing delete request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
         
         postService.delete(req);
@@ -65,16 +80,22 @@ public class PostController {
 
     @GetMapping("/all")
     public ResponseEntity<List<PostResponse>> getAllPosts(){
+        logger.info("Processing get all request");
+
         return ResponseEntity.status(HttpStatus.OK).body(postService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPostById(@PathVariable String id){
+        logger.info("Processing get by id request");
+
         return ResponseEntity.status(HttpStatus.OK).body(postService.findByIdResponse(id));
     }
 
     @GetMapping("/")
     public ResponseEntity<List<PostResponse>> getPostsByUserId(@RequestParam String user_id){
+        logger.info("Processing get by user id request");
+
         return ResponseEntity.status(HttpStatus.OK).body(postService.findByUserId(user_id));
     }
 }

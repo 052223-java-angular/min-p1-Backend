@@ -2,6 +2,8 @@ package com.revature.pokemon.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,11 @@ import lombok.AllArgsConstructor;
 public class TeamController {
     private final TeamService teamService;
     private final TokenService tokenService;
+
+    private static final Logger logger = LoggerFactory.getLogger(TeamController.class);
+    static{
+        logger.info("TEAM path");
+    }
     
     @PostMapping("/create")
     public ResponseEntity<?> createTeam(@RequestBody NewTeamRequest req){

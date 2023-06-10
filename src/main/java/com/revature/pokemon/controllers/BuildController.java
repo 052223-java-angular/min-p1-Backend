@@ -2,6 +2,9 @@ package com.revature.pokemon.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +21,6 @@ import com.revature.pokemon.dtos.requests.NewBuildRequest;
 import com.revature.pokemon.dtos.responses.BuildResponse;
 import com.revature.pokemon.services.BuildService;
 import com.revature.pokemon.services.TokenService;
-import com.revature.pokemon.utils.custom_exceptions.InvalidTokenException;
 
 import lombok.AllArgsConstructor;
 
@@ -29,16 +31,25 @@ public class BuildController {
     private final BuildService buildService;
     private final TokenService tokenService;
 
+    private static final Logger logger = LoggerFactory.getLogger(BuildController.class);
+    static{
+        logger.info("BUILD path");
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createBuild(@RequestBody NewBuildRequest req){
+        logger.info("Processing create request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
-        
+
         buildService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
     public ResponseEntity<?> modifyBuild(@RequestBody ModifyBuildRequest req){
+        logger.info("Processing modify request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
 
         buildService.modify(req);
@@ -47,6 +58,8 @@ public class BuildController {
 
     @PostMapping("/delete")
     public ResponseEntity<?> deleteBuild(@RequestBody BuildDeleteRequest req){
+        logger.info("Processing delete request");
+
         tokenService.validateToken(req.getToken(), req.getUserId());
 
         buildService.delete(req);
@@ -55,11 +68,15 @@ public class BuildController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BuildResponse> getBuildsById(@PathVariable String id){
+        logger.info("Processing get by id request");
+
         return ResponseEntity.status(HttpStatus.OK).body(buildService.findBuildsWithPokemonById(id));
     }
 
     @GetMapping("/")
     public ResponseEntity<List<BuildResponse>> getBuildsByUserId(@RequestParam String user_id){
+        logger.info("Processing get by user id request");
+        
         return ResponseEntity.status(HttpStatus.OK).body(buildService.findByUserId(user_id));
     }
 
