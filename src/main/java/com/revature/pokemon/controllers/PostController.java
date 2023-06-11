@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,40 +38,40 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@RequestBody NewPostRequest req){
+    public ResponseEntity<?> createPost(@RequestBody NewPostRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing create request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         postService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> votePost(@RequestBody PostVoteRequest req){
+    public ResponseEntity<?> votePost(@RequestBody PostVoteRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing vote request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         postService.vote(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req){
+    public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing modify request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         postService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req){
+    public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing delete request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         postService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();

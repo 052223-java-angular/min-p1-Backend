@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,40 +32,40 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createBuild(@RequestBody NewCommenRequest req){
+    public ResponseEntity<?> createBuild(@RequestBody NewCommenRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing create request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
 
         commentService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> votePost(@RequestBody CommentVoteRequest req){
+    public ResponseEntity<?> votePost(@RequestBody CommentVoteRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing vote request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         commentService.vote(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<?> modifyComment(@RequestBody ModifyCommentRequest req){
+    public ResponseEntity<?> modifyComment(@RequestBody ModifyCommentRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing modify request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         commentService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> deleteComment(@RequestBody CommentDeleteRequest req){
+    public ResponseEntity<?> deleteComment(@RequestBody CommentDeleteRequest req, @RequestHeader ("Authorization") String token){
         logger.info("Processing delete request");
 
-        tokenService.validateToken(req.getToken(), req.getUserId());
+        tokenService.validateToken(token, req.getUserId());
         
         commentService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();

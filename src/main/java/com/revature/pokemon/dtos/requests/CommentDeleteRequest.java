@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommentDeleteRequest {
-    private String token;
     private String userId;
     private String commentId;
 }

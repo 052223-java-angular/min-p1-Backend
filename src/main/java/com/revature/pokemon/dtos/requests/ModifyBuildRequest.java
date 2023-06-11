@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModifyBuildRequest {
-    private String token;
     private String userId;
     private String buildId;
     private String name;

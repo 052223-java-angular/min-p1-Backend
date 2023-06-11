@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NewBuildRequest {
-    private String token;
     private String userId;
     private String name;
     private String pokemonName;

@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostVoteRequest {
-    private String token;
     private String userId;
     private String postId;
     private boolean vote;

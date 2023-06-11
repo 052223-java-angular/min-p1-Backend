@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TeamDeleteRequest {
-    private String token;
     private String userId;
     private String teamId;
 }

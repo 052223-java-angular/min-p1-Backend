@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class ModifyCommentRequest {
     private String comment;
-    private String token;
     private String userId;
     private String commentId;
 }

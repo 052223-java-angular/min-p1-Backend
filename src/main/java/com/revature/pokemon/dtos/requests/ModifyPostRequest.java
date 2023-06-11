@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ModifyPostRequest {
-    private String token;
     private String userId;
     private String postId;
     private String postTitle;
