@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -28,19 +29,20 @@ import lombok.Setter;
 public class User {
     @Id
     private String id;
-    
-    @Column(unique = true, nullable =  false)
+
+    @Column(unique = true, nullable = false)
     private String username;
-    
+
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable =  false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column
     private String signature;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     @JsonBackReference
@@ -69,7 +71,6 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Build> builds;
-
 
     public User(String username, String password, String email, Role role) {
         this.username = username;
