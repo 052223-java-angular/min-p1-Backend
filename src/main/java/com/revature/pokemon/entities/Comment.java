@@ -31,7 +31,7 @@ public class Comment {
 
     @Id
     private String id;
-    
+
     @Column(nullable = false)
     private Date create_time;
 
@@ -55,6 +55,8 @@ public class Comment {
     @JsonManagedReference
     private Set<CommentVote> commentVotes;
 
+    private String username;
+
     public Comment(String comment, Post post, User user) {
         this.comment = comment;
         this.post = post;
@@ -62,6 +64,6 @@ public class Comment {
         this.id = UUID.randomUUID().toString();
         this.create_time = new Date(System.currentTimeMillis());
         this.edit_time = new Date(System.currentTimeMillis());
-
+        this.username = user.getUsername();
     }
 }

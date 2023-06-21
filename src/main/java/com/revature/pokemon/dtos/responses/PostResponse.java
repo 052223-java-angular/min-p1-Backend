@@ -23,7 +23,8 @@ public class PostResponse {
     private Date create_time;
     private Date edit_time;
     private Set<Comment> comments;
-    private Set<PostVote> votes; 
+    private Set<PostVote> votes;
+    private String username;
 
     public PostResponse(Post post) {
         this.id = post.getId();
@@ -33,6 +34,7 @@ public class PostResponse {
         this.edit_time = post.getEdit_time();
         this.comments = post.getComments();
         this.votes = post.getPostVotes();
+        this.username = post.getUser().getUsername();
     }
-    
+
 }
