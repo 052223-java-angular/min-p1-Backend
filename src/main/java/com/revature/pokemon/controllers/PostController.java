@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.revature.pokemon.services.TokenService;
 
 import lombok.AllArgsConstructor;
 
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/post")
@@ -33,66 +35,68 @@ public class PostController {
     private final PostService postService;
 
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
-    static{
+    static {
         logger.info("POST path");
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@RequestBody NewPostRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> createPost(@RequestBody NewPostRequest req, @RequestHeader("Authorization") String token) {
         logger.info("Processing create request");
 
         tokenService.validateToken(token, req.getUserId());
-        
+
         postService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> votePost(@RequestBody PostVoteRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> votePost(@RequestBody PostVoteRequest req, @RequestHeader("Authorization") String token) {
         logger.info("Processing vote request");
 
         tokenService.validateToken(token, req.getUserId());
-        
+
         postService.vote(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> modifyPost(@RequestBody ModifyPostRequest req,
+            @RequestHeader("Authorization") String token) {
         logger.info("Processing modify request");
 
         tokenService.validateToken(token, req.getUserId());
-        
+
         postService.modify(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> deletePost(@RequestBody PostDeleteRequest req,
+            @RequestHeader("Authorization") String token) {
         logger.info("Processing delete request");
 
         tokenService.validateToken(token, req.getUserId());
-        
+
         postService.delete(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostResponse>> getAllPosts(){
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
         logger.info("Processing get all request");
 
         return ResponseEntity.status(HttpStatus.OK).body(postService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPostById(@PathVariable String id){
+    public ResponseEntity<PostResponse> getPostById(@PathVariable String id) {
         logger.info("Processing get by id request");
 
         return ResponseEntity.status(HttpStatus.OK).body(postService.findByIdResponse(id));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<PostResponse>> getPostsByUserId(@RequestParam String user_id){
+    public ResponseEntity<List<PostResponse>> getPostsByUserId(@RequestParam String user_id) {
         logger.info("Processing get by user id request");
 
         return ResponseEntity.status(HttpStatus.OK).body(postService.findByUserId(user_id));
