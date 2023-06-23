@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -27,11 +28,13 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "posts")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+
 public class Post {
 
     @Id
     private String id;
-    
+
     @Column(nullable = false)
     private String post_title;
 

@@ -28,7 +28,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "builds")
 public class Build {
-    
 
     @Id
     private String id;
@@ -45,7 +44,7 @@ public class Build {
     @Column
     private String description;
 
-    @ManyToMany(mappedBy = "builds",fetch = FetchType.LAZY) 
+    @ManyToMany(mappedBy = "builds", fetch = FetchType.LAZY)
     @JsonBackReference
     private Set<Team> teams;
 
@@ -71,14 +70,15 @@ public class Build {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinTable(
-        name = "learned_moves",
-        joinColumns = @JoinColumn(name = "build_id"),
-        inverseJoinColumns = @JoinColumn(name = "move_id")
-    )
+    @JoinTable(name = "learned_moves", joinColumns = @JoinColumn(name = "build_id"), inverseJoinColumns = @JoinColumn(name = "move_id"))
     private Set<Move> moves;
 
-    public Build(String name, String description, User user, Nature nature, Ability ability, Set<Move> moves, Pokemon pokemon) {
+    private String pokemonName;
+    private String natureName;
+    private String abilityName;
+
+    public Build(String name, String description, User user, Nature nature, Ability ability, Set<Move> moves,
+            Pokemon pokemon) {
         this.name = name;
         this.description = description;
         this.user = user;
@@ -89,5 +89,8 @@ public class Build {
         this.create_time = new Date(System.currentTimeMillis());
         this.edit_time = new Date(System.currentTimeMillis());
         this.id = UUID.randomUUID().toString();
+        this.pokemonName = pokemon.getName();
+        this.natureName = nature.getName();
+        this.abilityName = ability.getName();
     }
 }
