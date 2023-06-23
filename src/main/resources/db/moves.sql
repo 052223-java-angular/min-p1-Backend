@@ -1,4 +1,5 @@
 INSERT INTO moves (id, name) VALUES
+('0',''),
 ('1', 'Pound'),
 ('2', 'Karate Chop'),
 ('3', 'Double Slap'),

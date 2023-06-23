@@ -20,16 +20,18 @@ public class MoveService {
 
     private static final Logger logger = LoggerFactory.getLogger(MoveService.class);
 
-    public Move findByName(String name){
+    public Move findByName(String name) {
         logger.info("Finding move by name");
 
-        return moveRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Move (" + name +") not found!"));
+        return moveRepo.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Move (" + name + ") not found!"));
     }
+
     public Set<Move> findByNames(String[] move_set) {
         logger.info("Finding moves by name");
 
         Set<Move> moves = new HashSet<>();
-        for(String move : move_set){
+        for (String move : move_set) {
             Move m = findByName(move);
             moves.add(m);
         }

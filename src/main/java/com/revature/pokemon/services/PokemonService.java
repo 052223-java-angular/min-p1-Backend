@@ -17,10 +17,11 @@ public class PokemonService {
 
     private static final Logger logger = LoggerFactory.getLogger(PokemonService.class);
 
-    public Pokemon findByName(String name){
+    public Pokemon findByName(String name) {
         logger.info("Finding pokemon by name");
 
-        return pokemonRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Pokemon (" + name +") not found!"));
+        return pokemonRepo.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Pokemon (" + name + ") not found!"));
     }
 
 }

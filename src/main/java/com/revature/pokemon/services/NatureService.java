@@ -17,9 +17,10 @@ public class NatureService {
 
     private static final Logger logger = LoggerFactory.getLogger(NatureService.class);
 
-    public Nature findByName(String name){
+    public Nature findByName(String name) {
         logger.info("Finding nature by name");
 
-        return natureRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Nature (" + name +") not found!"));
+        return natureRepo.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Nature (" + name + ") not found!"));
     }
 }

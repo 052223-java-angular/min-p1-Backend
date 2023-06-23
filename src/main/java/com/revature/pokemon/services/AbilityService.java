@@ -17,9 +17,10 @@ public class AbilityService {
 
     private static final Logger logger = LoggerFactory.getLogger(AbilityService.class);
 
-    public Ability findByName(String name){
+    public Ability findByName(String name) {
         logger.info("Finding ability by name");
 
-        return abilityRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Ability (" + name +") not found!"));
+        return abilityRepo.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Ability (" + name + ") not found!"));
     }
 }
