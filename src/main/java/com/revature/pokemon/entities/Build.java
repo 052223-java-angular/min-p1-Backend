@@ -73,10 +73,6 @@ public class Build {
     @JoinTable(name = "learned_moves", joinColumns = @JoinColumn(name = "build_id"), inverseJoinColumns = @JoinColumn(name = "move_id"))
     private Set<Move> moves;
 
-    private String pokemonName;
-    private String natureName;
-    private String abilityName;
-
     public Build(String name, String description, User user, Nature nature, Ability ability, Set<Move> moves,
             Pokemon pokemon) {
         this.name = name;
@@ -89,8 +85,5 @@ public class Build {
         this.create_time = new Date(System.currentTimeMillis());
         this.edit_time = new Date(System.currentTimeMillis());
         this.id = UUID.randomUUID().toString();
-        this.pokemonName = pokemon.getName();
-        this.natureName = nature.getName();
-        this.abilityName = ability.getName();
     }
 }
