@@ -27,14 +27,14 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public boolean isUniqueUsername(String username){
+    public boolean isUniqueUsername(String username) {
         logger.info("Verifying unique username");
 
         Optional<User> userOpt = userRepo.findByUsername(username);
         return userOpt.isEmpty();
     }
 
-    public boolean isValidUserName(String username){
+    public boolean isValidUserName(String username) {
         logger.info("Verifying valid username");
 
         return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
@@ -52,7 +52,7 @@ public class UserService {
         return password.equals(confirmedPassword);
     }
 
-    public User register(NewUserRequest req){
+    public User register(NewUserRequest req) {
         logger.info("Creating new user");
 
         Role role = roleService.findByName("USER");
@@ -65,12 +65,12 @@ public class UserService {
         return newUser;
     }
 
-    public Optional<Principal> login(NewLoginRequest req){
+    public Optional<Principal> login(NewLoginRequest req) {
         logger.info("Logging in");
 
         Optional<User> userOpt = userRepo.findByUsername(req.getUsername());
 
-        if(userOpt.isEmpty() || !BCrypt.checkpw(req.getPassword(), userOpt.get().getPassword())){
+        if (userOpt.isEmpty() || !BCrypt.checkpw(req.getPassword(), userOpt.get().getPassword())) {
             return Optional.empty();
         }
         Principal principal = new Principal(userOpt.get());
@@ -81,7 +81,7 @@ public class UserService {
 
     }
 
-    public User findById(String id){
+    public User findById(String id) {
         logger.info("Finding user by id");
 
         return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
