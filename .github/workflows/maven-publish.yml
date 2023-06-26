@@ -1,7 +1,7 @@
 # This is the name of your workflow, it will appear this way in the Actions tab of your GitHub repository
 name: CI/CD
 
-# Defines when the workflow will run
+# Defines when the workflow will run.
 on:
   # The workflow will run every time a push is made to the main branch
   push:
