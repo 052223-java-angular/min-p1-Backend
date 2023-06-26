@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import com.revature.pokemon.dtos.requests.CommentDeleteRequest;
 import com.revature.pokemon.dtos.requests.CommentVoteRequest;
 import com.revature.pokemon.dtos.requests.ModifyCommentRequest;
-import com.revature.pokemon.dtos.requests.NewCommenRequest;
+import com.revature.pokemon.dtos.requests.NewCommentRequest;
 import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.entities.Comment;
 import com.revature.pokemon.entities.CommentVote;
@@ -45,7 +45,7 @@ public class CommentServiceTest {
 
     @Test
     void testCreate() {
-        NewCommenRequest req = new NewCommenRequest();
+        NewCommentRequest req = new NewCommentRequest();
         req.setComment("hello there");
         req.setPostId("real post id");
         req.setUserId("real user id");

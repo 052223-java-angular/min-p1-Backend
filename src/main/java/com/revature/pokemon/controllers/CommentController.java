@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.pokemon.dtos.requests.CommentDeleteRequest;
 import com.revature.pokemon.dtos.requests.CommentVoteRequest;
 import com.revature.pokemon.dtos.requests.ModifyCommentRequest;
-import com.revature.pokemon.dtos.requests.NewCommenRequest;
+import com.revature.pokemon.dtos.requests.NewCommentRequest;
 import com.revature.pokemon.services.CommentService;
 import com.revature.pokemon.services.TokenService;
 
@@ -34,7 +34,7 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createBuild(@RequestBody NewCommenRequest req,
+    public ResponseEntity<?> createBuild(@RequestBody NewCommentRequest req,
             @RequestHeader("Authorization") String token) {
         logger.info("Processing create request");
 

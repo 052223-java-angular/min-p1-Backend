@@ -20,13 +20,26 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+/**
+ * The UserService class provides methods for user management and
+ * authentication.
+ */
 public class UserService {
     private final UserRepository userRepo;
     private final RoleService roleService;
     private final TokenService tokenService;
 
+    /**
+     * The logger instance for logging messages related to UserService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    /**
+     * Checks if the provided username is unique.
+     *
+     * @param username the username to be checked
+     * @return true if the username is unique, false otherwise
+     */
     public boolean isUniqueUsername(String username) {
         logger.info("Verifying unique username");
 
@@ -34,24 +47,49 @@ public class UserService {
         return userOpt.isEmpty();
     }
 
+    /**
+     * Checks if the provided username is valid.
+     *
+     * @param username the username to be checked
+     * @return true if the username is valid, false otherwise
+     */
     public boolean isValidUserName(String username) {
         logger.info("Verifying valid username");
 
         return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
     }
 
+    /**
+     * Checks if the provided password is valid.
+     *
+     * @param password the password to be checked
+     * @return true if the password is valid, false otherwise
+     */
     public boolean isValidPassword(String password) {
         logger.info("Verifying valid password");
 
         return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
     }
 
+    /**
+     * Checks if the provided password and confirmed password are the same.
+     *
+     * @param password          the password to be checked
+     * @param confirmedPassword the confirmed password to be checked
+     * @return true if the passwords are the same, false otherwise
+     */
     public boolean isSamePassword(String password, String confirmedPassword) {
         logger.info("Verifying same password");
 
         return password.equals(confirmedPassword);
     }
 
+    /**
+     * Registers a new user based on the provided request.
+     *
+     * @param req the NewUserRequest containing the user information
+     * @return the created User object
+     */
     public User register(NewUserRequest req) {
         logger.info("Creating new user");
 
@@ -65,6 +103,13 @@ public class UserService {
         return newUser;
     }
 
+    /**
+     * Logs in a user based on the provided login request.
+     *
+     * @param req the NewLoginRequest containing the login information
+     * @return an Optional containing the authenticated Principal if login is
+     *         successful, empty otherwise
+     */
     public Optional<Principal> login(NewLoginRequest req) {
         logger.info("Logging in");
 
@@ -76,17 +121,29 @@ public class UserService {
         Principal principal = new Principal(userOpt.get());
         principal.setToken(tokenService.generateJWT(principal));
 
-        logger.info("login sucess");
+        logger.info("Login success");
         return Optional.of(principal);
-
     }
 
+    /**
+     * Finds a user by the specified ID.
+     *
+     * @param id the ID of the user
+     * @return the User object representing the user
+     * @throws ResourceNotFoundException if the user is not found
+     */
     public User findById(String id) {
         logger.info("Finding user by id");
 
         return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
     }
 
+    /**
+     * Modifies the signature of a user based on the provided request.
+     *
+     * @param req the ModifyUserSignatureRequest containing the user ID and the new
+     *            signature
+     */
     public void modifySignature(ModifyUserSignatureRequest req) {
         logger.info("Modifying signature");
 

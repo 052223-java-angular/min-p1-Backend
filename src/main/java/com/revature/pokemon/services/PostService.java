@@ -21,15 +21,27 @@ import com.revature.pokemon.utils.custom_exceptions.PermissionException;
 import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
+
 @AllArgsConstructor
 @Service
+/**
+ * The PostService class provides methods for managing posts.
+ */
 public class PostService {
     PostRepository postRepo;
     UserService userService;
     PostVoteService postVoteService;
 
+    /**
+     * The logger instance for logging messages related to PostService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
+    /**
+     * Creates a new post.
+     *
+     * @param req the NewPostRequest object containing the details of the new post
+     */
     public void create(NewPostRequest req) {
         logger.info("Creating new post");
 
@@ -40,24 +52,38 @@ public class PostService {
         logger.info("Created new post");
     }
 
+    /**
+     * Finds a post by its ID.
+     *
+     * @param postId the ID of the post to be found
+     * @return the Post object with the specified ID
+     * @throws ResourceNotFoundException if the post with the specified ID is not
+     *                                   found
+     */
     public Post findById(String postId) {
         logger.info("Finding post by id");
-        return postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post (" + postId +") not found!"));
+        return postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post (" + postId + ") not found!"));
     }
 
+    /**
+     * Votes on a post.
+     *
+     * @param req the PostVoteRequest object containing the details of the vote
+     */
     public void vote(PostVoteRequest req) {
-        logger.info("Voding on post");
+        logger.info("Voting on post");
 
         User user = userService.findById(req.getUserId());
         Post post = findById(req.getPostId());
         PostVote vote = postVoteService.findByUserAndPost(user, post);
-        if(vote == null){
+        if (vote == null) {
             vote = new PostVote(user, post, req.isVote());
-        }else{
-            if(vote.isVote() == req.isVote()){
+        } else {
+            if (vote.isVote() == req.isVote()) {
                 postVoteService.delete(vote);
                 return;
-            }else{
+            } else {
                 vote.setVote(req.isVote());
             }
         }
@@ -66,12 +92,20 @@ public class PostService {
         logger.info("Voted post");
     }
 
+    /**
+     * Modifies a post.
+     *
+     * @param req the ModifyPostRequest object containing the details of the
+     *            modifications
+     * @throws PermissionException if the user does not have permission to modify
+     *                             the post
+     */
     public void modify(ModifyPostRequest req) {
         logger.info("Modifying post");
-        
-        Post post = findById(req.getPostId());  
 
-        if(!req.getUserId().equals(post.getUser().getId())){
+        Post post = findById(req.getPostId());
+
+        if (!req.getUserId().equals(post.getUser().getId())) {
             throw new PermissionException("You do not have permission to make this change!");
         }
 
@@ -84,12 +118,20 @@ public class PostService {
         logger.info("Modified post");
     }
 
+    /**
+     * Deletes a post.
+     *
+     * @param req the PostDeleteRequest object containing the ID of the post to be
+     *            deleted
+     * @throws PermissionException if the user does not have permission to delete
+     *                             the post
+     */
     public void delete(PostDeleteRequest req) {
         logger.info("Deleting post");
 
         Post post = findById(req.getPostId());
 
-        if(!req.getUserId().equals(post.getUser().getId())){
+        if (!req.getUserId().equals(post.getUser().getId())) {
             throw new PermissionException("You do not have permission to make this change!");
         }
 
@@ -98,36 +140,56 @@ public class PostService {
         logger.info("Deleted post");
     }
 
+    /**
+     * Finds all posts.
+     *
+     * @return a list of PostResponse objects representing all the posts
+     */
     public List<PostResponse> findAll() {
-        logger.info("Finding all post");
+        logger.info("Finding all posts");
 
         List<Post> posts = postRepo.findAll();
         List<PostResponse> responsesList = new ArrayList<>();
 
-        for(Post post : posts){
+        for (Post post : posts) {
             responsesList.add(new PostResponse(post));
         }
 
         return responsesList;
     }
 
+    /**
+     * Finds posts by user ID.
+     *
+     * @param user_id the ID of the user
+     * @return a list of PostResponse objects representing the posts made by the
+     *         user with the specified ID
+     */
     public List<PostResponse> findByUserId(String user_id) {
-        logger.info("Finding post by user id");
+        logger.info("Finding posts by user id");
 
         List<Post> posts = postRepo.findAllByUserId(user_id);
         List<PostResponse> responseList = new ArrayList<>();
 
-        for(Post post : posts){
+        for (Post post : posts) {
             responseList.add(new PostResponse(post));
         }
         return responseList;
     }
 
+    /**
+     * Finds a post by its ID and returns it as a PostResponse object.
+     *
+     * @param id the ID of the post
+     * @return the PostResponse object representing the post with the specified ID
+     * @throws ResourceNotFoundException if the post with the specified ID is not
+     *                                   found
+     */
     public PostResponse findByIdResponse(String id) {
         logger.info("Finding post by id");
 
-        Post post = postRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team (" + id +") not found!"));;
+        Post post = postRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post (" + id + ") not found!"));
         return new PostResponse(post);
     }
-    
 }

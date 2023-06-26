@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NewCommenRequest {
+public class NewCommentRequest {
     private String comment;
     private String userId;
     private String postId;

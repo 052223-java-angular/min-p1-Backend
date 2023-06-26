@@ -12,12 +12,25 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+/**
+ * The NatureService class provides methods for retrieving natures.
+ */
 public class NatureService {
     NatureRepository natureRepo;
 
+    /**
+     * The logger instance for logging messages related to NatureService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(NatureService.class);
 
-    public Nature findByName(String name) {
+    /**
+     * Finds a nature by its name.
+     *
+     * @param name the name of the nature to be found
+     * @return the Nature object with the specified name
+     * @throws ResourceNotFoundException if the nature is not found
+     */
+    public Nature findByName(String name) throws ResourceNotFoundException {
         logger.info("Finding nature by name");
 
         return natureRepo.findByNameIgnoreCase(name)

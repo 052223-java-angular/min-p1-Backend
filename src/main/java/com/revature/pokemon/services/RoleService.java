@@ -12,14 +12,28 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+/**
+ * The RoleService class provides methods for managing roles.
+ */
 public class RoleService {
     private final RoleRepository roleRepo;
 
+    /**
+     * The logger instance for logging messages related to RoleService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
 
-    public Role findByName(String name){
+    /**
+     * Finds a role by its name.
+     *
+     * @param name the name of the role to be found
+     * @return the Role object with the specified name
+     * @throws ResourceNotFoundException if the role is not found
+     */
+    public Role findByName(String name) {
         logger.info("Finding role");
 
-        return roleRepo.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Role not found!"));
+        return roleRepo.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found!"));
     }
 }

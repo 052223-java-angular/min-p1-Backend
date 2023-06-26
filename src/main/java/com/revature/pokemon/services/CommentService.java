@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.revature.pokemon.dtos.requests.CommentDeleteRequest;
 import com.revature.pokemon.dtos.requests.CommentVoteRequest;
 import com.revature.pokemon.dtos.requests.ModifyCommentRequest;
-import com.revature.pokemon.dtos.requests.NewCommenRequest;
+import com.revature.pokemon.dtos.requests.NewCommentRequest;
 import com.revature.pokemon.entities.Comment;
 import com.revature.pokemon.entities.CommentVote;
 import com.revature.pokemon.entities.Post;
@@ -22,15 +22,28 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+/**
+ * The CommentService class provides methods for managing comments.
+ */
 public class CommentService {
     CommentRepository commentRepo;
     UserService userService;
     PostService postService;
     CommentVoteService commentVoteService;
 
+    /**
+     * The logger instance for logging messages related to CommentService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
 
-    public void create(NewCommenRequest req) {
+    /**
+     * Creates a new comment based on the provided request.
+     *
+     * @param req the NewCommentRequest containing comment information
+     * @throws ResourceNotFoundException if the user or post associated with the
+     *                                   comment is not found
+     */
+    public void create(NewCommentRequest req) throws ResourceNotFoundException {
         logger.info("Creating new comment");
 
         User user = userService.findById(req.getUserId());
@@ -41,57 +54,88 @@ public class CommentService {
         logger.info("Created new comment");
     }
 
-    public Comment findById(String commentId) {
+    /**
+     * Finds a comment by its ID.
+     *
+     * @param commentId the ID of the comment to be found
+     * @return the Comment object with the specified ID
+     * @throws ResourceNotFoundException if the comment is not found
+     */
+    public Comment findById(String commentId) throws ResourceNotFoundException {
         logger.info("Finding comment by id");
 
-        return commentRepo.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment (" + commentId +") not found!"));
+        return commentRepo.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment (" + commentId + ") not found!"));
     }
 
-    public void vote(CommentVoteRequest req) {
+    /**
+     * Votes on a comment based on the provided request.
+     *
+     * @param req the CommentVoteRequest containing vote information
+     * @throws ResourceNotFoundException if the user or comment associated with the
+     *                                   vote is not found
+     */
+    public void vote(CommentVoteRequest req) throws ResourceNotFoundException {
         logger.info("Voting on comment");
 
         User user = userService.findById(req.getUserId());
         Comment comment = findById(req.getCommentId());
         CommentVote vote = commentVoteService.findByUserAndComment(user, comment);
-        if(vote == null){
-            vote = new CommentVote(user, comment ,req.isVote());
-        }else{
-            if(vote.isVote() == req.isVote()){
+        if (vote == null) {
+            vote = new CommentVote(user, comment, req.isVote());
+        } else {
+            if (vote.isVote() == req.isVote()) {
                 commentVoteService.delete(vote);
                 return;
-            }else{
+            } else {
                 vote.setVote(req.isVote());
             }
         }
         commentVoteService.vote(vote);
 
         logger.info("Voted on comment");
-
     }
 
-    public void modify(ModifyCommentRequest req) {
+    /**
+     * Modifies a comment based on the provided request.
+     *
+     * @param req the ModifyCommentRequest containing comment modification
+     *            information
+     * @throws ResourceNotFoundException if the comment is not found
+     * @throws PermissionException       if the user does not have permission to
+     *                                   modify the comment
+     */
+    public void modify(ModifyCommentRequest req) throws ResourceNotFoundException, PermissionException {
         logger.info("Modifying comment");
 
         Comment comment = findById(req.getCommentId());
 
-        if(!req.getUserId().equals(comment.getUser().getId())){
+        if (!req.getUserId().equals(comment.getUser().getId())) {
             throw new PermissionException("You do not have permission to make this change!");
         }
 
         comment.setComment(req.getComment());
         comment.setEdit_time(new Date(System.currentTimeMillis()));
-        
+
         commentRepo.save(comment);
 
         logger.info("Modified comment");
     }
 
-    public void delete(CommentDeleteRequest req) {
+    /**
+     * Deletes a comment based on the provided request.
+     *
+     * @param req the CommentDeleteRequest containing comment deletion information
+     * @throws ResourceNotFoundException if the comment is not found
+     * @throws PermissionException       if the user does not have permission to
+     *                                   delete the comment
+     */
+    public void delete(CommentDeleteRequest req) throws ResourceNotFoundException, PermissionException {
         logger.info("Deleting comment");
 
         Comment comment = findById(req.getCommentId());
 
-        if(!req.getUserId().equals(comment.getUser().getId())){
+        if (!req.getUserId().equals(comment.getUser().getId())) {
             throw new PermissionException("You do not have permission to make this change!");
         }
 
@@ -99,5 +143,4 @@ public class CommentService {
 
         logger.info("Deleted comment");
     }
-    
 }

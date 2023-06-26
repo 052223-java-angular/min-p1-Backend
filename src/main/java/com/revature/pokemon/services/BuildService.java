@@ -28,6 +28,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+/**
+ * The BuildService class provides methods for managing builds.
+ */
 public class BuildService {
     BuildRepository buildRepo;
     AbilityService abilityService;
@@ -36,9 +39,21 @@ public class BuildService {
     MoveService moveService;
     UserService userService;
 
+    /**
+     * The logger instance for logging messages related to BuildService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(BuildService.class);
 
-    public Build create(NewBuildRequest req) {
+    /**
+     * Creates a new build based on the provided request.
+     *
+     * @param req the NewBuildRequest containing build information
+     * @return the created Build object
+     * @throws ResourceNotFoundException if any of the required resources (nature,
+     *                                   ability, pokemon, moves, user) are not
+     *                                   found
+     */
+    public Build create(NewBuildRequest req) throws ResourceNotFoundException {
         logger.info("Creating build");
 
         Nature nature = natureService.findByName(req.getNatureName());
@@ -54,13 +69,27 @@ public class BuildService {
         return build;
     }
 
-    public Build findById(String id) {
+    /**
+     * Finds a build by its ID.
+     *
+     * @param id the ID of the build to be found
+     * @return the Build object with the specified ID
+     * @throws ResourceNotFoundException if the build is not found
+     */
+    public Build findById(String id) throws ResourceNotFoundException {
         logger.info("Finding build by id");
 
         return buildRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Build (" + id + ") not found!"));
     }
 
-    public Set<Build> findByIds(String[] ids) {
+    /**
+     * Finds a set of builds by their IDs.
+     *
+     * @param ids an array of build IDs
+     * @return a set of Build objects with the specified IDs
+     * @throws ResourceNotFoundException if any of the builds are not found
+     */
+    public Set<Build> findByIds(String[] ids) throws ResourceNotFoundException {
         logger.info("Finding builds by id");
 
         Set<Build> builds = new HashSet<>();
@@ -71,6 +100,12 @@ public class BuildService {
         return builds;
     }
 
+    /**
+     * Finds builds by user ID.
+     *
+     * @param user_id the ID of the user associated with the builds
+     * @return a list of BuildResponse objects representing the builds
+     */
     public List<BuildResponse> findByUserId(String user_id) {
         logger.info("Finding builds by user id");
 
@@ -85,7 +120,14 @@ public class BuildService {
         return responseList;
     }
 
-    public BuildResponse findBuildsWithPokemonById(String id) {
+    /**
+     * Finds a BuildResponse object with Pokemon information by its ID.
+     *
+     * @param id the ID of the build to be found
+     * @return the BuildResponse object with the specified ID
+     * @throws ResourceNotFoundException if the build is not found
+     */
+    public BuildResponse findBuildsWithPokemonById(String id) throws ResourceNotFoundException {
         logger.info("Finding builds with pokemon by id");
 
         Build build = buildRepo.findById(id)
@@ -95,7 +137,17 @@ public class BuildService {
         return new BuildResponse(build);
     }
 
-    public void modify(ModifyBuildRequest req) {
+    /**
+     * Modifies a build based on the provided request.
+     *
+     * @param req the ModifyBuildRequest containing build modification information
+     * @throws ResourceNotFoundException if any of the required resources (nature,
+     *                                   ability, pokemon, moves, build) are not
+     *                                   found
+     * @throws PermissionException       if the user does not have permission to
+     *                                   modify the build
+     */
+    public void modify(ModifyBuildRequest req) throws ResourceNotFoundException, PermissionException {
         logger.info("Modifying build");
 
         Nature nature = natureService.findByName(req.getNatureName());
@@ -121,7 +173,15 @@ public class BuildService {
         logger.info("Modified build");
     }
 
-    public void delete(BuildDeleteRequest req) {
+    /**
+     * Deletes a build based on the provided request.
+     *
+     * @param req the BuildDeleteRequest containing build deletion information
+     * @throws ResourceNotFoundException if the build is not found
+     * @throws PermissionException       if the user does not have permission to
+     *                                   delete the build
+     */
+    public void delete(BuildDeleteRequest req) throws ResourceNotFoundException, PermissionException {
         logger.info("Deleting build");
 
         Build build = findById(req.getBuildId());

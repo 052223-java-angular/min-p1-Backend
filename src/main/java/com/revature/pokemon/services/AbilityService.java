@@ -12,12 +12,25 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+/**
+ * The AbilityService class provides methods for retrieving abilities.
+ */
 public class AbilityService {
     AbilityRepository abilityRepo;
 
+    /**
+     * The logger instance for logging messages related to AbilityService.
+     */
     private static final Logger logger = LoggerFactory.getLogger(AbilityService.class);
 
-    public Ability findByName(String name) {
+    /**
+     * Finds an ability by its name.
+     *
+     * @param name the name of the ability to be found
+     * @return the Ability object with the specified name
+     * @throws ResourceNotFoundException if the ability is not found
+     */
+    public Ability findByName(String name) throws ResourceNotFoundException {
         logger.info("Finding ability by name");
 
         return abilityRepo.findByNameIgnoreCase(name)
