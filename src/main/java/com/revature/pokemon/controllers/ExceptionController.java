@@ -19,12 +19,25 @@ import com.revature.pokemon.utils.custom_exceptions.ResourceNotFoundException;
 import io.jsonwebtoken.ExpiredJwtException;
 
 @RestControllerAdvice
+/**
+ * The ExceptionController class handles exceptions thrown during the execution
+ * of the application.
+ */
 public class ExceptionController {
 
+    /**
+     * The logger instance for logging messages related to ExceptionController.
+     */
     private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
 
+    /**
+     * Handles InvalidCredentialException and returns an appropriate error response.
+     *
+     * @param e the InvalidCredentialException
+     * @return a ResponseEntity with the appropriate HTTP status and error message
+     */
     @ExceptionHandler(InvalidCredentialException.class)
-    public ResponseEntity<Map<String, Object>> handleInvalidCredentialException(InvalidCredentialException e){
+    public ResponseEntity<Map<String, Object>> handleInvalidCredentialException(InvalidCredentialException e) {
         logger.error("Invalid Credential");
 
         Map<String, Object> map = new HashMap<>();
@@ -33,6 +46,12 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(map);
     }
 
+    /**
+     * Handles ResourceNotFoundException and returns an appropriate error response.
+     *
+     * @param e the ResourceNotFoundException
+     * @return a ResponseEntity with the appropriate HTTP status and error message
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleResourceNotFoundException(ResourceNotFoundException e) {
         logger.error("Resource not found");
@@ -43,6 +62,12 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(map);
     }
 
+    /**
+     * Handles InvalidTokenException and returns an appropriate error response.
+     *
+     * @param e the InvalidTokenException
+     * @return a ResponseEntity with the appropriate HTTP status and error message
+     */
     @ExceptionHandler(InvalidTokenException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidTokenException(InvalidTokenException e) {
         logger.error("Invalid token");
@@ -53,6 +78,12 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(map);
     }
 
+    /**
+     * Handles PermissionException and returns an appropriate error response.
+     *
+     * @param e the PermissionException
+     * @return a ResponseEntity with the appropriate HTTP status and error message
+     */
     @ExceptionHandler(PermissionException.class)
     public ResponseEntity<Map<String, Object>> handlePermissionException(PermissionException e) {
         logger.error("No permission");
@@ -63,6 +94,12 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(map);
     }
 
+    /**
+     * Handles ExpiredJwtException and returns an appropriate error response.
+     *
+     * @param e the ExpiredJwtException
+     * @return a ResponseEntity with the appropriate HTTP status and error message
+     */
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<Map<String, Object>> handleExpiredJwtException(ExpiredJwtException e) {
         logger.error("Expired token");
@@ -72,5 +109,5 @@ public class ExceptionController {
         map.put("message", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(map);
     }
-    
+
 }

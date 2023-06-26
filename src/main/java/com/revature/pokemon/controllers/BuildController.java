@@ -29,17 +29,28 @@ import lombok.AllArgsConstructor;
 @CrossOrigin
 @RestController
 @RequestMapping("/build")
+/**
+ * The BuildController class handles HTTP requests related to builds.
+ */
 public class BuildController {
     private final BuildService buildService;
     private final TokenService tokenService;
 
+    /**
+     * The logger instance for logging messages related to BuildController.
+     */
     private static final Logger logger = LoggerFactory.getLogger(BuildController.class);
-    static{
-        logger.info("BUILD path");
-    }
 
+    /**
+     * Creates a new build based on the provided request.
+     *
+     * @param req   the NewBuildRequest containing the build information
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/create")
-    public ResponseEntity<?> createBuild(@RequestBody NewBuildRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> createBuild(@RequestBody NewBuildRequest req,
+            @RequestHeader("Authorization") String token) {
         logger.info("Processing create request");
 
         tokenService.validateToken(token, req.getUserId());
@@ -48,8 +59,16 @@ public class BuildController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Modifies an existing build based on the provided request.
+     *
+     * @param req   the ModifyBuildRequest containing the build information
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/modify")
-    public ResponseEntity<?> modifyBuild(@RequestBody ModifyBuildRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> modifyBuild(@RequestBody ModifyBuildRequest req,
+            @RequestHeader("Authorization") String token) {
         logger.info("Processing modify request");
 
         tokenService.validateToken(token, req.getUserId());
@@ -58,8 +77,16 @@ public class BuildController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Deletes a build based on the provided request.
+     *
+     * @param req   the BuildDeleteRequest containing the build ID and user ID
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/delete")
-    public ResponseEntity<?> deleteBuild(@RequestBody BuildDeleteRequest req, @RequestHeader ("Authorization") String token){
+    public ResponseEntity<?> deleteBuild(@RequestBody BuildDeleteRequest req,
+            @RequestHeader("Authorization") String token) {
         logger.info("Processing delete request");
 
         tokenService.validateToken(token, req.getUserId());
@@ -68,19 +95,31 @@ public class BuildController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Retrieves a build by its ID.
+     *
+     * @param id the ID of the build
+     * @return a ResponseEntity containing the BuildResponse with the appropriate
+     *         HTTP status
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<BuildResponse> getBuildsById(@PathVariable String id){
+    public ResponseEntity<BuildResponse> getBuildsById(@PathVariable String id) {
         logger.info("Processing get by id request");
 
         return ResponseEntity.status(HttpStatus.OK).body(buildService.findBuildsWithPokemonById(id));
     }
 
+    /**
+     * Retrieves builds by user ID.
+     *
+     * @param user_id the ID of the user
+     * @return a ResponseEntity containing a List of BuildResponses with the
+     *         appropriate HTTP status
+     */
     @GetMapping("/")
-    public ResponseEntity<List<BuildResponse>> getBuildsByUserId(@RequestParam String user_id){
+    public ResponseEntity<List<BuildResponse>> getBuildsByUserId(@RequestParam String user_id) {
         logger.info("Processing get by user id request");
-        
+
         return ResponseEntity.status(HttpStatus.OK).body(buildService.findByUserId(user_id));
     }
-
-
 }

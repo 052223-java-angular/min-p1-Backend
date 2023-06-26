@@ -24,17 +24,27 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("comment")
+/**
+ * The CommentController class handles HTTP requests related to comments.
+ */
 public class CommentController {
     private final CommentService commentService;
     private final TokenService tokenService;
 
+    /**
+     * The logger instance for logging messages related to CommentController.
+     */
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
-    static {
-        logger.info("COMMENT path");
-    }
 
+    /**
+     * Creates a new comment based on the provided request.
+     *
+     * @param req   the NewCommentRequest containing the comment information
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/create")
-    public ResponseEntity<?> createBuild(@RequestBody NewCommentRequest req,
+    public ResponseEntity<?> createComment(@RequestBody NewCommentRequest req,
             @RequestHeader("Authorization") String token) {
         logger.info("Processing create request");
 
@@ -44,8 +54,15 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Votes on a comment based on the provided request.
+     *
+     * @param req   the CommentVoteRequest containing the vote information
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/vote")
-    public ResponseEntity<?> votePost(@RequestBody CommentVoteRequest req,
+    public ResponseEntity<?> voteComment(@RequestBody CommentVoteRequest req,
             @RequestHeader("Authorization") String token) {
         logger.info("Processing vote request");
 
@@ -55,6 +72,13 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Modifies an existing comment based on the provided request.
+     *
+     * @param req   the ModifyCommentRequest containing the comment information
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/modify")
     public ResponseEntity<?> modifyComment(@RequestBody ModifyCommentRequest req,
             @RequestHeader("Authorization") String token) {
@@ -66,6 +90,13 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Deletes a comment based on the provided request.
+     *
+     * @param req   the CommentDeleteRequest containing the comment ID and user ID
+     * @param token the authorization token
+     * @return a ResponseEntity with the appropriate HTTP status
+     */
     @PostMapping("/delete")
     public ResponseEntity<?> deleteComment(@RequestBody CommentDeleteRequest req,
             @RequestHeader("Authorization") String token) {
