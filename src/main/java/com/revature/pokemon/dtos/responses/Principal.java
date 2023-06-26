@@ -1,6 +1,5 @@
 package com.revature.pokemon.dtos.responses;
 
-import com.revature.pokemon.entities.Role;
 import com.revature.pokemon.entities.User;
 
 import lombok.AllArgsConstructor;
@@ -15,12 +14,14 @@ import lombok.Setter;
 public class Principal {
     private String id;
     private String username;
+    private String email;
     private String role;
     private String token;
 
     public Principal(User user){
         this.id = user.getId();
         this.username = user.getUsername();
+        this.email = user.getEmail();
         this.role = user.getRole().getName();
     }
 }
