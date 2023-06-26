@@ -5,7 +5,7 @@ name: CI/CD
 on:
   # The workflow will run every time a push is made to the main branch
   push:
-    branches: [ main ]
+    branches: [ main ] 
 
 # A workflow run is made up of one or more jobs
 jobs:
@@ -45,7 +45,7 @@ jobs:
         # The name of your Elastic Beanstalk application
         application_name: pokemon
         # The name of your Elastic Beanstalk environment
-        environment_name: pokemon-env
+        environment_name: Pokemon-env
         # A unique version label for the deployment
         version_label: version-${{github.run_number}}
         # The AWS region your Elastic Beanstalk application is hosted in
