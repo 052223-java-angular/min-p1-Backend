@@ -15,7 +15,6 @@ import com.revature.pokemon.dtos.requests.CommentDeleteRequest;
 import com.revature.pokemon.dtos.requests.CommentVoteRequest;
 import com.revature.pokemon.dtos.requests.ModifyCommentRequest;
 import com.revature.pokemon.dtos.requests.NewCommentRequest;
-import com.revature.pokemon.entities.Build;
 import com.revature.pokemon.entities.Comment;
 import com.revature.pokemon.entities.CommentVote;
 import com.revature.pokemon.entities.Post;

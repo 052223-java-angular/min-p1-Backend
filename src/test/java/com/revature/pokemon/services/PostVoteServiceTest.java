@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.revature.pokemon.entities.Post;
 import com.revature.pokemon.entities.PostVote;
-import com.revature.pokemon.entities.PostVote;
 import com.revature.pokemon.entities.User;
 import com.revature.pokemon.repositories.PostVoteRepository;
 

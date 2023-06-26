@@ -1,20 +1,9 @@
 package com.revature.pokemon.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-
-import com.revature.pokemon.dtos.responses.Principal;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 public class TokenServiceTest {
 
