@@ -47,7 +47,7 @@ jobs:
         # The name of your Elastic Beanstalk environment
         environment_name: Pokemon-env-1
         # A unique version label for the deployment
-        version_label: version-${{github.run_number+1}}
+        version_label: version-${{github.run_number}}
         # The AWS region your Elastic Beanstalk application is hosted in
         region: us-east-1
         # The jar file that will be deployed to Elastic Beanstalk
