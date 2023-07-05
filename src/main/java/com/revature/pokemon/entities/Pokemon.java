@@ -23,8 +23,8 @@ public class Pokemon {
 
     @Id
     private String id;
-    
-    @Column(unique = true, nullable =  false)
+
+    @Column(unique = true, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "pokemon", fetch = FetchType.LAZY)
